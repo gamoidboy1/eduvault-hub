@@ -13,14 +13,9 @@ window.HeaderComponent = {
       <div style="display:flex; align-items:center;">
         <div class="header-brand" onclick="App.switchView('dashboard')"
           style="display:flex;align-items:center;gap:10px;cursor:pointer;">
-          <div class="brand-logo-container">
-            <img src="assets/logo.png" alt="Studiom" 
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                 style="width:32px; height:32px; object-fit:contain;">
-            <div style="width:30px;height:30px;background:var(--red);border-radius:0px;
-                        display:none;align-items:center;justify-content:center;flex-shrink:0;">
-              <span style="font-size:.75rem;font-weight:900;color:#fff;letter-spacing:-.5px;">SM</span>
-            </div>
+          <div style="width:30px;height:30px;background:var(--red);border-radius:0px;
+                      display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-size:.75rem;font-weight:900;color:#fff;letter-spacing:-.5px;">SM</span>
           </div>
           <div class="brand-text-container">
               <div class="title" style="font-family: 'Inter', sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Studiom</div>
