@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduVault — Jude C J</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+
+    <!-- Firebase SDK v10 -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-storage-compat.js"></script>
+</head>
+
+<body>
+
+    <!-- ══════ LOGIN ══════ -->
+    <div id="login-overlay">
+        <div class="login-card">
+            <div class="login-title">Edu<span>Vault</span></div>
+            <div class="login-subtitle">v1.0 · Student Collaboration Platform</div>
+
+            <div class="login-form">
+                <div class="form-row">
+                    <label>Quick Access Portals</label>
+                    <select id="login-quick-select" style="padding: 12px; font-weight: 600; cursor: pointer; border-radius: 0; background: var(--surface); color: white; border: 1px solid var(--border); width: 100%;">
+                        <!-- Populated by App.js -->
+                    </select>
+                </div>
+                <div class="btn-row" style="margin-top: 18px;">
+                    <button class="btn-solid-red w-full clicky-element" id="btn-login"
+                        style="flex:1;padding:14px;font-size:.9rem;font-weight:700;">ENTER HUB →</button>
+                </div>
+                <div id="login-msg" class="login-msg" style="margin-top: 12px; font-size: 0.75rem; text-align: center; font-weight: 600;"></div>
+            </div>
+
+            <div
+                style="margin-top:24px;padding-top:14px;border-top:1px solid var(--border);font-size:.68rem;color:var(--text-muted);text-align:center;line-height:1.7;">
+                Select a dummy account above and click <strong style="color:var(--red-light);">Enter Hub</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════ APP SHELL ══════ -->
+    <div id="app" style="display:none;">
+        <!-- Slim brand bar -->
+        <div id="app-header"></div>
+        <!-- Horizontal top tab nav -->
+        <nav id="top-nav"></nav>
+        <!-- Page content -->
+        <main id="main-content"></main>
+
+        <!-- Floating Action Button for Mobile -->
+        <button class="menu-toggle" onclick="App.toggleNav()">☰</button>
+    </div>
+
+    <!-- ── Data & Config ── -->
+    <script src="js/config/firebase.js"></script>
+    <script src="js/data/csvLoader.js"></script>
+    <script src="js/data/dummy.js"></script>
+
+    <!-- ── Services ── -->
+    <script src="js/services/auth.js"></script>
+    <script src="js/services/firestore.js"></script>
+    <script src="js/services/storage.js"></script>
+
+    <!-- ── Components ── -->
+    <script src="js/components/header.js"></script>
+    <script src="js/components/topNav.js"></script>
+    <script src="js/components/moduleTree.js"></script>
+    <script src="js/components/commentList.js"></script>
+
+    <!-- ── Views ── -->
+    <script src="js/views/dashboard.js"></script>
+    <script src="js/views/subjects.js"></script>
+    <script src="js/views/subjectDetail.js"></script>
+    <script src="js/views/moduleDetail.js"></script>
+    <script src="js/views/facultyDashboard.js"></script>
+    <script src="js/views/faculty.js"></script>
+    <script src="js/views/profile.js"></script>
+
+    <!-- ── Router (last) ── -->
+    <script src="js/app.js"></script>
+</body>
+
+</html>

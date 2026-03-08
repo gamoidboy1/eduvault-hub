@@ -1,0 +1,294 @@
+/* ═══════════════════════════════════════════════════════════
+   BASE.CSS — Design System: Premium Dark Theme w/ Red Accents
+   EduConnect Hub v2.0
+═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  /* ── Backgrounds ── */
+  --bg: #060608;
+  --surface: #0f0f12;
+  --surface-2: #161619;
+  --surface-3: #1e1e23;
+  --surface-4: #252529;
+
+  /* ── Red Accents ── */
+  --red: #EF4444;
+  --red-dark: #DC2626;
+  --red-darker: #B91C1C;
+  --red-light: #F87171;
+  --red-glow: rgba(239, 68, 68, 0.10);
+  --red-glow-md: rgba(239, 68, 68, 0.18);
+  --red-glow-lg: rgba(239, 68, 68, 0.25);
+  --red-border: rgba(239, 68, 68, 0.30);
+  --red-border-strong: rgba(239, 68, 68, 0.50);
+
+  /* ── Accent Colors for Modules ── */
+  --accent-orange: #F97316;
+  --accent-yellow: #EAB308;
+  --accent-green: #22C55E;
+  --accent-blue: #3B82F6;
+  --accent-purple: #8B5CF6;
+  --accent-pink: #EC4899;
+
+  /* ── Text ── */
+  --text: #FAFAFA;
+  --text-2: #D1D5DB;
+  --text-3: #9CA3AF;
+  --text-muted: #6B7280;
+  --text-faint: #374151;
+
+  /* ── Borders ── */
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  /* ── Gradients ── */
+  --grad-hero: linear-gradient(135deg, #130404 0%, #1a0606 40%, #120303 100%);
+  --grad-red: linear-gradient(135deg, #EF4444, #DC2626);
+  --grad-red-glow: linear-gradient(135deg, rgba(239, 68, 68, .15), rgba(220, 38, 38, .08));
+  --grad-surface: linear-gradient(160deg, #161619, #0f0f12);
+  --grad-card: linear-gradient(145deg, #161619 0%, #111114 100%);
+
+  /* ── Radius (Forced Sharp) ── */
+  --r-xs: 0px;
+  --r-sm: 0px;
+  --r-md: 0px;
+  --r-lg: 0px;
+  --r-xl: 0px;
+  --r-2xl: 0px;
+  --r-pill: 0px;
+
+  /* ── Shadows ── */
+  --shadow-xs: 0 1px 4px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.8);
+  --shadow-red: 0 4px 24px rgba(239, 68, 68, 0.22);
+  --shadow-red-lg: 0 8px 40px rgba(239, 68, 68, 0.30);
+  --glow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  /* ── Spacing ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* ── Layout ── */
+  --header-h: 54px;
+  --nav-h: 48px;
+  --content-top: 102px;
+
+  /* ── Transitions (Snappy & Clicky) ── */
+  --transition: all 0.1s ease-out;
+  --transition-slow: all 0.2s ease-out;
+  --transition-spring: all 0.1s ease-out;
+
+  /* ── Font ── */
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-size-2xs: 0.62rem;
+  --font-size-xs: 0.70rem;
+  --font-size-sm: 0.80rem;
+  --font-size-base: 0.88rem;
+  --font-size-md: 0.95rem;
+  --font-size-lg: 1.05rem;
+  --font-size-xl: 1.20rem;
+  --font-size-2xl: 1.50rem;
+}
+
+/* ── RESET ────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── SCROLLBAR ────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-3);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--red);
+}
+
+/* ── SELECTION ────────────────────────────────────────────── */
+::selection {
+  background: var(--red-glow-lg);
+  color: var(--red-light);
+}
+
+/* Fix for blinking cursor appearing on text elements (Caret Browsing) */
+:not(input):not(textarea):not(select) {
+  caret-color: transparent;
+}
+input, textarea, select {
+  caret-color: auto;
+}
+
+/* ── LINKS ────────────────────────────────────────────────── */
+a {
+  color: var(--red-light);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--red);
+}
+
+a:active {
+  transform: scale(0.97);
+}
+
+/* ── UTILITY CLASSES ──────────────────────────────────────── */
+.text-red {
+  color: var(--red);
+}
+
+.text-red-lt {
+  color: var(--red-light);
+}
+
+.text-2 {
+  color: var(--text-2);
+}
+
+.text-3 {
+  color: var(--text-3);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-white {
+  color: var(--text);
+}
+
+.text-sm {
+  font-size: var(--font-size-sm);
+}
+
+.text-xs {
+  font-size: var(--font-size-xs);
+}
+
+.text-lg {
+  font-size: var(--font-size-lg);
+}
+
+.semibold {
+  font-weight: 600;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.strike {
+  text-decoration: line-through;
+}
+
+/* Layout */
+.flex {
+  display: flex;
+}
+
+.flex-c {
+  display: flex;
+  align-items: center;
+}
+
+.flex-sb {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-w {
+  flex-wrap: wrap;
+}
+
+.gap-1 {
+  gap: var(--space-1);
+}
+
+.gap-2 {
+  gap: var(--space-2);
+}
+
+.gap-3 {
+  gap: var(--space-3);
+}
+
+.gap-4 {
+  gap: var(--space-4);
+}
+
+.mt-1 {
+  margin-top: var(--space-1);
+}
+
+.mt-2 {
+  margin-top: var(--space-2);
+}
+
+.mt-3 {
+  margin-top: var(--space-3);
+}
+
+.mt-4 {
+  margin-top: var(--space-4);
+}
+
+.mb-2 {
+  margin-bottom: var(--space-2);
+}
+
+.mb-3 {
+  margin-bottom: var(--space-3);
+}
+
+.p-3 {
+  padding: var(--space-3);
+}
+
+.p-4 {
+  padding: var(--space-4);
+}
+
+.w-full {
+  width: 100%;
+}
+
+.hidden {
+  display: none !important;
+}
