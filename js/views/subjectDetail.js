@@ -31,7 +31,7 @@ window.SubjectDetailView = {
       <style>
         .date-badge { font-size: 0.6rem; color: var(--text-muted); font-weight: 500; font-family: monospace; }
       </style>
-      <div style="padding:0;">
+      <div class="view-container">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
           <button id="btn-back-subjects" class="btn-outline btn-tiny clicky-element" style="padding:5px 14px;gap:4px;">
             ← Back
@@ -41,7 +41,7 @@ window.SubjectDetailView = {
 
         <div style="background:var(--surface);border:1px solid var(--border); overflow:hidden;position:relative;">
           <div style="height:3px;background:linear-gradient(90deg,var(--red),rgba(239,68,68,.2));"></div>
-          <div style="padding:18px 18px 14px;">
+          <div style="padding:24px;">
             <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;">
               <div style="width:52px;height:52px;border-radius:var(--r-lg);background:var(--red-glow);
                           border:1px solid var(--red-border);display:flex;align-items:center;
@@ -57,7 +57,7 @@ window.SubjectDetailView = {
               </div>
             </div>
 
-            <div style="display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:10px 14px;">
+            <div style="display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:14px;">
               <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(139,92,246,.15));
                           border:1px solid rgba(139,92,246,.25);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;">👨‍🏫</div>
               <div style="flex:1;min-width:0;">
@@ -71,7 +71,7 @@ window.SubjectDetailView = {
         </div>
       </div>
 
-      <div style="padding:12px 0 0;">
+      <div style="padding:24px 0 0;">
         <div id="subj-tabs"
           style="display:flex;gap:0;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-lg);padding:4px;overflow:hidden;">
           ${tabs.map(t => `
@@ -89,6 +89,7 @@ window.SubjectDetailView = {
 
       <div id="subj-tab-content" style="padding:0 0 24px;">
         ${this._renderTab(tab, mods, subject)}
+      </div>
       </div>
     `;
 

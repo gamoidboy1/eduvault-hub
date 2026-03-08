@@ -26,6 +26,7 @@ window.ModuleDetailView = {
     const ns = mod.note ? (noteStyles[mod.noteType] || noteStyles['reminder']) : null;
 
     main.innerHTML = `
+      <div class="view-container">
       <div style="display:flex;align-items:center;gap:8px;padding:0;flex-wrap:wrap;">
         <button class="btn-outline btn-tiny" onclick="App.openSubject('${subjectId}')"
           style="border-radius:var(--r-pill)!important;">← ${subject ? subject.code : 'Back'}</button>
@@ -73,6 +74,7 @@ window.ModuleDetailView = {
       <div class="section-label" style="padding-left:0; padding-right:0;">Study Resources</div>
       <div style="padding:0 0 30px;display:flex;flex-direction:column;gap:12px;">
         ${mod.chapters.map((ch, i) => this._chapter(ch, i, mod.num, accent)).join('')}
+      </div>
       </div>
     `;
   },

@@ -11,6 +11,7 @@ window.FacultyDashboardView = {
     const batches = window.DUMMY.facultyBatches;
 
     main.innerHTML = `
+      <div class="view-container">
       <!-- Hero -->
       <div>
         <div class="hero-card">
@@ -30,7 +31,7 @@ window.FacultyDashboardView = {
       </div>
 
       <!-- Stats -->
-      <div style="padding:10px 0 0;">
+      <div style="padding:24px 0 0;">
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;">
           <div class="stat-card"><div class="stat-val">${batches.length}</div><div class="stat-lbl">Assigned Batches</div></div>
           <div class="stat-card"><div class="stat-val">${batches.reduce((s, b) => s + b.subjects.length, 0)}</div><div class="stat-lbl">Total Subjects</div></div>
@@ -71,6 +72,7 @@ window.FacultyDashboardView = {
     }).join('')}
             </div>
           </div>`).join('')}
+      </div>
       </div>
     `;
   }

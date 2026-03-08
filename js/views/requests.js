@@ -13,13 +13,10 @@ window.RequestsView = {
 
         main.innerHTML = `
             <style>
-                .requests-container {
-                    animation: fadeInScale 0.2s ease-out forwards;
+                .requests-list-wrapper {
                     display: flex;
                     flex-direction: column;
                     gap: 16px;
-                    max-width: 1200px;
-                    margin: 0 auto;
                 }
                 .req-card {
                     padding: 20px;
@@ -148,9 +145,10 @@ window.RequestsView = {
                 }
             </style>
 
-            <div class="requests-container">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h1 style="color:white; font-size:1.5rem;">Note Requests</h1>
+            <div class="view-container">
+                <div class="requests-list-wrapper">
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 24px;">
+                    <h1 style="color:white; font-size:1.4rem; font-weight:800; text-transform:uppercase; letter-spacing:1px;">Note Requests</h1>
                     <button class="btn-request clicky-element" onclick="document.getElementById('new-request-form').style.display='flex'">+ New Request</button>
                 </div>
 
@@ -216,6 +214,7 @@ window.RequestsView = {
                             </div>
                         `;
                     }).join('')}
+                </div>
                 </div>
             </div>
         `;

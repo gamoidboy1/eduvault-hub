@@ -23,14 +23,29 @@ window.HeaderComponent = {
 
       <!-- Right side -->
       <div class="header-right">
-        <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
-            ${isFaculty ? 'Faculty Portal' : 'Student Portal'}
-        </div>
+        <div id="header-clock" style="font-size: 0.72rem; color: var(--text-2); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-family:'Inter', sans-serif;"></div>
       </div>
     `;
+    this.startClock();
   },
 
-  setActiveToggle() { },
-  setUserLabel() { },
-  destroy() { }
+  startClock() {
+    const update = () => {
+        const clockEl = document.getElementById('header-clock');
+        if (!clockEl) return;
+
+        const now = new Date();
+        
+        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase();
+        clockEl.textContent = timeStr;
+    };
+
+    update();
+    if (this._clockInterval) clearInterval(this._clockInterval);
+    this._clockInterval = setInterval(update, 1000);
+  },
+
+  destroy() {
+    if (this._clockInterval) clearInterval(this._clockInterval);
+  }
 };

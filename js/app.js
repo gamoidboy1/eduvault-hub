@@ -118,6 +118,33 @@ window.App = {
         }
     },
 
+    quickLogin(role) {
+        const credentials = {
+            student: '25cy308@mgits.ac.in',
+            faculty: 'prof.verma@mgits.ac.in',
+            admin: 'admin@acadex.edu'
+        };
+        const email = credentials[role];
+        const emailInput = document.getElementById('login-email');
+        const passInput = document.getElementById('login-password');
+        
+        if (emailInput && passInput && email) {
+            emailInput.value = email;
+            passInput.value = email; // Password is same as email in dummy logic
+            
+            // Highlight the inputs briefly
+            emailInput.style.borderColor = 'var(--red-light)';
+            passInput.style.borderColor = 'var(--red-light)';
+            setTimeout(() => {
+                emailInput.style.borderColor = 'var(--border)';
+                passInput.style.borderColor = 'var(--border)';
+            }, 500);
+
+            // Auto-submit
+            this.handleLogin();
+        }
+    },
+
     _loginUser(user, isAutoRestore = false) {
         Object.assign(window.DUMMY.currentUser, user);
         

@@ -63,6 +63,16 @@
             <div class="login-subtitle">v1.0 · Student Collaboration Platform</div>
 
             <div class="login-form">
+                <!-- Quick Login Selection -->
+                <div style="margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; text-align: center;">Quick Login As</div>
+                    <div style="display: flex; gap: 8px; justify-content: center;">
+                        <button type="button" onclick="window.App.quickLogin('student')" style="flex: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text-2); padding: 10px 5px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: all 0.2s;">🎓 Student</button>
+                        <button type="button" onclick="window.App.quickLogin('faculty')" style="flex: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text-2); padding: 10px 5px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: all 0.2s;">👔 Faculty</button>
+                        <button type="button" onclick="window.App.quickLogin('admin')" style="flex: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text-2); padding: 10px 5px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: all 0.2s;">🏢 Admin</button>
+                    </div>
+                </div>
+
                 <form id="auth-form" onsubmit="event.preventDefault(); window.App.handleLogin();">
                     <div class="form-row">
                         <label>Email Address</label>

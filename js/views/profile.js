@@ -11,7 +11,7 @@ window.ProfileView = {
 
     main.innerHTML = `
       <!-- Profile Hero -->
-      <div>
+      <div class="view-container">
         <div class="hero-card" style="text-align:center;">
           <div class="hero-glow" style="top:-70px;left:50%;transform:translateX(-50%);width:280px;height:280px;"></div>
 
@@ -58,6 +58,7 @@ window.ProfileView = {
         </div>
       </div>
 
+      </div>
     `;
   },
 

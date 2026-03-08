@@ -6,7 +6,7 @@ window.DUMMY = {
 
     subjects: [
         {
-            id: 'CY301', name: 'Network Security', code: 'CY301', teacher: 'Dr. Anil Sharma',
+            id: 'CY301', name: 'Network Security', code: 'CY301', teacher: 'Anil Sharma',
             modules: 4, icon: '🌐', profImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
             description: 'Fundamentals of securing networks, firewalls, IDS/IPS and VPNs.',
             syllabus: ['Network threats & attack vectors', 'Firewalls & packet filtering', 'Intrusion Detection & Prevention Systems', 'VPNs, IPSec & TLS/SSL', 'Network monitoring & forensics'],
@@ -17,7 +17,7 @@ window.DUMMY = {
             ]
         },
         {
-            id: 'CY302', name: 'Cryptography', code: 'CY302', teacher: 'Prof. Meena Iyer',
+            id: 'CY302', name: 'Cryptography', code: 'CY302', teacher: 'Meena Iyer',
             modules: 5, icon: '🔑', profImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
             description: 'Symmetric & asymmetric encryption, hashing, PKI, digital signatures.',
             syllabus: ['Classical ciphers & Shannon theory', 'Symmetric encryption — AES, DES', 'Asymmetric encryption — RSA, ECC', 'Hash functions & MAC', 'PKI & digital certificates'],
@@ -28,7 +28,7 @@ window.DUMMY = {
             ]
         },
         {
-            id: 'CY303', name: 'Ethical Hacking', code: 'CY303', teacher: 'Dr. Anil Sharma',
+            id: 'CY303', name: 'Ethical Hacking', code: 'CY303', teacher: 'Anil Sharma',
             modules: 6, icon: '💻', profImage: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
             description: 'Penetration testing lifecycle, vulnerability assessment, exploitation.',
             syllabus: ['Penetration testing phases', 'Reconnaissance & OSINT', 'Scanning & enumeration', 'Exploitation techniques', 'Post-exploitation & reporting'],
@@ -39,7 +39,7 @@ window.DUMMY = {
             ]
         },
         {
-            id: 'CY304', name: 'Digital Forensics', code: 'CY304', teacher: 'Prof. Sujatha Nair',
+            id: 'CY304', name: 'Digital Forensics', code: 'CY304', teacher: 'Sujatha Nair',
             modules: 4, icon: '🔍', profImage: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop',
             description: 'Evidence collection, disk imaging, memory forensics and incident response.',
             syllabus: ['Forensic investigation process', 'Disk imaging & chain of custody', 'File system analysis (NTFS, ext4)', 'Memory & network forensics', 'Incident response procedures'],
@@ -50,7 +50,7 @@ window.DUMMY = {
             ]
         },
         {
-            id: 'CY305', name: 'Malware Analysis', code: 'CY305', teacher: 'Dr. Vikram Das',
+            id: 'CY305', name: 'Malware Analysis', code: 'CY305', teacher: 'Vikram Das',
             modules: 3, icon: '🦠', profImage: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop',
             description: 'Static and dynamic analysis of malware, reverse engineering and sandboxing.',
             syllabus: ['Malware types & taxonomy', 'Static analysis techniques', 'Dynamic analysis & sandboxing', 'Reverse engineering basics', 'Anti-analysis techniques'],
@@ -61,7 +61,7 @@ window.DUMMY = {
             ]
         },
         {
-            id: 'CY306', name: 'Web Security', code: 'CY306', teacher: 'Prof. Priya Menon',
+            id: 'CY306', name: 'Web Security', code: 'CY306', teacher: 'Priya Menon',
             modules: 4, icon: '🕸️', profImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop',
             description: 'OWASP Top 10, XSS, SQLi, CSRF, API security and secure coding.',
             syllabus: ['OWASP Top 10 vulnerabilities', 'SQL Injection & prevention', 'XSS — reflected, stored, DOM', 'CSRF & clickjacking', 'API security & JWT'],
@@ -72,7 +72,7 @@ window.DUMMY = {
             ]
         },
         {
-            id: 'MA201', name: 'Discrete Mathematics', code: 'MA201', teacher: 'Dr. Thomas George',
+            id: 'MA201', name: 'Discrete Mathematics', code: 'MA201', teacher: 'Thomas George',
             modules: 5, icon: '📐', profImage: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop',
             description: 'Logic, sets, graph theory, combinatorics and number theory.',
             syllabus: ['Propositional & predicate logic', 'Set theory & relations', 'Graph theory fundamentals', 'Combinatorics & counting', 'Number theory & modular arithmetic'],
@@ -83,7 +83,7 @@ window.DUMMY = {
             ]
         },
         {
-            id: 'CY308', name: 'Cloud Security', code: 'CY308', teacher: 'Prof. Divya Krishnan',
+            id: 'CY308', name: 'Cloud Security', code: 'CY308', teacher: 'Divya Krishnan',
             modules: 3, icon: '☁️', profImage: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop',
             description: 'Cloud architecture security, AWS/Azure IAM, data protection.',
             syllabus: ['Cloud deployment models', 'IAM — roles, policies, MFA', 'Data encryption at rest & transit', 'Container & serverless security', 'Cloud compliance & auditing'],

@@ -61,9 +61,9 @@ window.FacultyView = {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             background: var(--surface);
-            padding: 16px;
+            padding: 24px;
             border: 1px solid var(--border);
             border-radius: var(--r-md);
         }
@@ -80,10 +80,37 @@ window.FacultyView = {
             cursor: pointer;
             outline: none;
             transition: all 0.2s;
+            width: 100%;
         }
         .fac-dropdown:focus { border-color: var(--red-light); background: var(--surface-3); }
+        
+        /* Themed Date Picker */
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) sepia(100%) saturate(10000%) hue-rotate(0deg) brightness(1);
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+            opacity: 1;
+        }
+        .fac-input-themed {
+            background: var(--surface-2) !important;
+            border: 1px solid var(--border) !important;
+            color: white !important;
+            padding: 12px !important;
+            font-size: 0.85rem !important;
+            font-weight: 600 !important;
+            border-radius: 4px !important;
+            outline: none !important;
+            transition: border-color 0.2s !important;
+        }
+        .fac-input-themed:focus {
+            border-color: var(--red-light) !important;
+        }
       </style>
 
+      <div class="view-container">
       <div class="selector-container">
         <div class="selector-group">
           <label class="selector-label">Active Batch</label>
@@ -102,15 +129,15 @@ window.FacultyView = {
         </div>
       </div>
 
-      <div style="background:linear-gradient(140deg, #1a0505, #0a0202); border: 1px solid var(--red-border); padding: 20px; position: relative; overflow: hidden; margin-bottom: 10px;">
+      <div style="background:linear-gradient(140deg, #1a0505, #0a0202); border: 1px solid var(--red-border); padding: 24px; position: relative; overflow: hidden; margin-bottom: 15px;">
         <div style="position:absolute; top:0; left:0; right:0; height:3px; background:var(--red);"></div>
-        <div style="display:flex; align-items:center; gap:15px; position:relative;">
-           <div style="width:50px; height:50px; border:1px solid var(--red-border); overflow:hidden;">
+        <div style="display:flex; align-items:center; gap:20px; position:relative;">
+           <div style="width:54px; height:54px; border:1px solid var(--red-border); overflow:hidden;">
               <img src="${S ? S.profImage : ''}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://ui-avatars.com/api/?name=F'"/>
            </div>
            <div>
-              <div style="font-size:1.1rem; font-weight:800; color:var(--red-light); line-height:1;">${S ? S.name : code}</div>
-              <div style="font-size:0.75rem; color:var(--text-muted); margin-top:5px;">${code} &middot; <span style="color:var(--text-2); font-weight:700;">${B ? B.batchCode : ''}</span></div>
+              <div style="font-size:1.2rem; font-weight:800; color:var(--red-light); line-height:1;">${S ? S.name : code}</div>
+              <div style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;">${code} &middot; <span style="color:var(--text-2); font-weight:700;">${B ? B.batchCode : ''}</span></div>
            </div>
         </div>
       </div>
@@ -118,7 +145,6 @@ window.FacultyView = {
       <div class="fac-tab-nav">
         <div class="fac-tab ${this._activeTab === 'modules' ? 'active' : ''}" onclick="FacultyView._setTab('modules')">MODULES</div>
         <div class="fac-tab ${this._activeTab === 'assignments' ? 'active' : ''}" onclick="FacultyView._setTab('assignments')">ASSIGNMENTS</div>
-        <div class="fac-tab ${this._activeTab === 'submissions' ? 'active' : ''}" onclick="FacultyView._setTab('submissions')">LIVE SUBMISSIONS</div>
       </div>
 
       <div id="faculty-view-content">
@@ -137,7 +163,6 @@ window.FacultyView = {
   _renderActiveTab(code) {
     if (this._activeTab === 'modules') return this._renderModulesView(code);
     if (this._activeTab === 'assignments') return this._renderAssignmentsView(code);
-    if (this._activeTab === 'submissions') return this._renderSubmissionsView(code);
   },
 
   _renderModulesView(code) {
@@ -216,14 +241,14 @@ window.FacultyView = {
       <div class="admin-card" style="padding:24px; margin-bottom:24px;">
         <div style="font-size:0.9rem; font-weight:800; color:var(--red-light); margin-bottom:20px; text-transform:uppercase; letter-spacing:1px;">Create New Assignment</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
-           <div class="selector-group">
-             <label class="selector-label">Task Title</label>
-             <input type="text" id="asgn-title" placeholder="e.g. Lab Exercise 1" style="padding:12px; font-size:0.85rem;">
-           </div>
-           <div class="selector-group">
-             <label class="selector-label">Submission Deadline</label>
-             <input type="datetime-local" id="asgn-deadline" style="padding:12px; font-size:0.85rem;">
-           </div>
+            <div class="selector-group">
+              <label class="selector-label">Task Title</label>
+              <input type="text" id="asgn-title" placeholder="e.g. Lab Exercise 1" class="fac-input-themed">
+            </div>
+            <div class="selector-group">
+              <label class="selector-label">Submission Deadline</label>
+              <input type="datetime-local" id="asgn-deadline" class="fac-input-themed">
+            </div>
         </div>
         
         <div class="selector-label" style="margin-bottom:8px;">Instruction Document</div>
@@ -271,41 +296,6 @@ window.FacultyView = {
            </div>` : ''}
         </div>
       `).join('')}
-    `;
-  },
-
-  _renderSubmissionsView(code) {
-    const submissions = [
-      { student: 'Rahul Kumar', roll: '25CY300', time: '2025-03-08 14:20', file: 'assignment1.pdf', status: 'On Time' },
-      { student: 'Sneha Rao', roll: '25CY305', time: '2025-03-08 16:45', file: 'final_report.pdf', status: 'LATE' }
-    ];
-    return `
-      <div class="admin-card" style="padding:0; overflow:hidden;">
-        <table style="width:100%; border-collapse:collapse; font-size:0.75rem;">
-          <thead style="background:var(--surface-2);">
-            <tr>
-              <th style="padding:15px; text-align:left; border-bottom:1px solid var(--border); color:var(--text-muted); font-weight:800;">STUDENT</th>
-              <th style="padding:15px; text-align:left; border-bottom:1px solid var(--border); color:var(--text-muted); font-weight:800;">SUBMITTED</th>
-              <th style="padding:15px; text-align:left; border-bottom:1px solid var(--border); color:var(--text-muted); font-weight:800;">RESOURCE</th>
-              <th style="padding:15px; text-align:center; border-bottom:1px solid var(--border); color:var(--text-muted); font-weight:800;">STATUS</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${submissions.map(s => `
-              <tr style="border-bottom:1px solid var(--border);">
-                <td style="padding:15px;">
-                  <div style="font-weight:800; color:var(--text); font-size:0.85rem;">${s.student}</div>
-                  <div style="font-size:0.65rem; color:var(--text-muted); margin-top:2px;">ROLL: ${s.roll}</div>
-                </td>
-                <td style="padding:15px; font-family:monospace; color:var(--text-2); font-weight:600;">${s.time}</td>
-                <td style="padding:15px; color:var(--red-light); cursor:pointer; font-weight:800;" onclick="alert('Downloading student submission...')">📄 VIEW PORTFOLIO</td>
-                <td style="padding:15px; text-align:center;">
-                  <span class="tag ${s.status === 'LATE' ? 'tag-red' : 'tag-gray'}" style="padding:4px 12px;">${s.status}</span>
-                </td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
       </div>
     `;
   },

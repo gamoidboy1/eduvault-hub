@@ -8,7 +8,7 @@
     background: var(--grad-hero);
     border: 1px solid var(--red-border);
     border-radius: var(--r-xl);
-    padding: 24px 20px;
+    padding: 24px;
     position: relative;
     overflow: hidden;
     box-shadow: var(--shadow-md), var(--glow-inset);
@@ -308,7 +308,7 @@ textarea {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--r-lg);
-    margin: 8px 16px;
+    margin: 12px 0;
     overflow: hidden;
     box-shadow: var(--shadow-sm);
 }

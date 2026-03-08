@@ -152,9 +152,28 @@
     margin-top: var(--header-h);
     margin-left: 240px;
     padding: 24px;
-    padding-bottom: 40px;
+    padding-bottom: 60px;
     min-height: calc(100vh - var(--header-h));
     transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.view-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    animation: fadeInScale 0.2s ease-out forwards;
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 850px) {
+    #main-content {
+        padding: 16px;
+        padding-bottom: 80px;
+    }
 }
 
 .menu-toggle {
@@ -248,10 +267,6 @@
 
 @media (max-width: 500px) {
     .brand-text-container .subtitle {
-        display: none;
-    }
-
-    .header-right {
         display: none;
     }
 }

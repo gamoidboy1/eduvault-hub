@@ -16,20 +16,8 @@ window.DashboardView = {
       : window.DUMMY.subjects;
 
     main.innerHTML = `
+      <div class="view-container">
       <style>
-        @keyframes fadeInScale {
-          from { opacity: 0; transform: translateY(5px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .premium-dash-container {
-          animation: fadeInScale 0.2s ease-out forwards;
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          max-width: 1200px;
-          margin: 0 auto;
-          position: relative;
-        }
         
         .glass-panel {
           background: rgba(25, 25, 25, 0.6);
@@ -52,7 +40,7 @@ window.DashboardView = {
         .profile-hero {
           display: flex;
           align-items: center;
-          gap: 20px;
+          gap: 24px;
           padding: 24px;
           z-index: 1;
         }
@@ -160,7 +148,7 @@ window.DashboardView = {
         }
       </style>
       
-      <div class="premium-dash-container">
+      <div style="display:flex; flex-direction:column; gap:12px; position:relative;">
         <!-- Profile Card -->
         <div class="glass-panel profile-hero">
           <div class="profile-avatar">${u.name.charAt(0)}</div>
@@ -179,7 +167,7 @@ window.DashboardView = {
         </div>
 
         <!-- Recently Updated for Branch -->
-        <div style="margin-top: 8px; position: relative;">
+        <div style="margin-top: 24px; position: relative;">
           <div class="section-header">
             <div class="section-title">New in ${u.branch}</div>
             <div onclick="App.switchView('subjects')" style="font-size:0.75rem; color:var(--red-light); cursor:pointer; font-weight:700;">BROWSE ALL →</div>
@@ -212,6 +200,7 @@ window.DashboardView = {
     }).join('') : `<div style="padding:40px; color:var(--text-muted); text-align:center; width:100%;">No branch activity found.</div>`}
           </div>
         </div>
+      </div>
       </div>
     `;
   }

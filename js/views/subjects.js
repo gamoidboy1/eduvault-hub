@@ -45,8 +45,8 @@ window.SubjectsView = {
     }
 
     main.innerHTML = `
-      <div style="padding:0;">
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;border-bottom: 1px solid var(--border); padding-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+      <div class="view-container">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;border-bottom: 1px solid var(--border); padding-bottom: 20px; flex-wrap: wrap; gap: 10px;">
           <div>
             <div style="font-size:1.4rem;font-weight:800;color:var(--text);text-transform:uppercase;letter-spacing:1px;">Study Materials</div>
             <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">
@@ -55,20 +55,20 @@ window.SubjectsView = {
             </div>
           </div>
         </div>
-      </div>
 
-      <div style="padding:20px 0 0;">
-        <div style="position:relative;">
-          <span style="position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:.9rem;pointer-events:none;color:var(--text-muted);">🔍</span>
-          <input type="text" id="subject-search" placeholder="Search subjects, teachers..."
-            class="sharp-input"
-            oninput="SubjectsView.filter(this.value)"
-            style="width:100%;padding:14px 14px 14px 44px;font-size:0.9rem;color:var(--text);" />
+        <div style="padding:24px 0 0;">
+          <div style="position:relative;">
+            <span style="position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:.9rem;pointer-events:none;color:var(--text-muted);">🔍</span>
+            <input type="text" id="subject-search" placeholder="Search subjects, teachers..."
+              class="sharp-input"
+              oninput="SubjectsView.filter(this.value)"
+              style="width:100%;padding:14px 14px 14px 44px;font-size:0.9rem;color:var(--text);" />
+          </div>
         </div>
-      </div>
 
-      <div id="subjects-grid" style="padding:24px 0;">
-        ${this._buildGrid(window.DUMMY.subjects)}
+        <div id="subjects-grid" style="padding:24px 0;">
+          ${this._buildGrid(window.DUMMY.subjects)}
+        </div>
       </div>
     `;
   },
@@ -107,7 +107,7 @@ window.SubjectsView = {
 
           <div style="border-top:1px solid var(--border);padding-top:16px;display:flex;justify-content:space-between;align-items:center;">
             <div style="font-size:0.75rem;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-                        max-width:100%;font-weight:600;" title="${s.teacher}">Dr. ${s.teacher}</div>
+                        max-width:100%;font-weight:600;" title="${s.teacher}">${s.teacher}</div>
           </div>
         </div>
       </div>
