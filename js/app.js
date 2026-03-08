@@ -49,6 +49,17 @@ window.App = {
         } else {
             this._showLogin();
         }
+
+        // PWA Install logic
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            window.App.deferredPrompt = e;
+            const isAndroid = /Android/i.test(navigator.userAgent);
+            if (isAndroid) {
+                const banner = document.getElementById('pwa-install-banner');
+                if (banner) banner.style.display = 'flex';
+            }
+        });
     },
 
     async handleLogin() {
@@ -259,6 +270,23 @@ window.App = {
 
     closeNav() {
         document.body.classList.remove('nav-open');
+    },
+
+    // PWA Handlers
+    handlePWAInstall() {
+        const banner = document.getElementById('pwa-install-banner');
+        if (banner) banner.style.display = 'none';
+        if (this.deferredPrompt) {
+            this.deferredPrompt.prompt();
+            this.deferredPrompt.userChoice.then((choiceResult) => {
+                this.deferredPrompt = null;
+            });
+        }
+    },
+
+    hidePWAInstall() {
+        const banner = document.getElementById('pwa-install-banner');
+        if (banner) banner.style.display = 'none';
     }
 };
 

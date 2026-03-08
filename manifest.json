@@ -1,0 +1,23 @@
+{
+  "name": "Acadex",
+  "short_name": "Acadex",
+  "description": "Premium Educational Asset Management Platform",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#060608",
+  "theme_color": "#EF4444",
+  "icons": [
+    {
+      "src": "assets/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
