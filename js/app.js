@@ -14,6 +14,12 @@ window.App = {
             window.FirestoreService.initLiveSync();
         }
 
+        // Restore Theme before rendering anything
+        const savedTheme = localStorage.getItem('acadex_theme');
+        if (savedTheme === 'light') {
+            this.toggleTheme(true);
+        }
+
         // Close nav on overlay click
         document.body.addEventListener('click', (e) => {
             if (document.body.classList.contains('nav-open') && e.target === document.body) {
@@ -130,8 +136,6 @@ window.App = {
         document.getElementById('login-overlay').style.display = 'flex';
     },
 
-
-
     switchView(view) {
         localStorage.setItem('educonnect_view', view);
         window.scrollTo({ top: 0, behavior: 'instant' });
@@ -174,8 +178,15 @@ window.App = {
         FacultyView.renderCourse(batchCode, subjectCode);
     },
 
-    toggleTheme() {
-        document.documentElement.classList.toggle('light-theme');
+    toggleTheme(isInitialLoad = false) {
+        if (!isInitialLoad) {
+            document.documentElement.classList.toggle('light-theme');
+            const currentTheme = document.documentElement.classList.contains('light-theme') ? 'light' : 'dark';
+            localStorage.setItem('acadex_theme', currentTheme);
+        } else {
+            document.documentElement.classList.add('light-theme');
+        }
+
         if (!document.getElementById('light-theme-styles')) {
             const style = document.createElement('style');
             style.id = 'light-theme-styles';
@@ -191,6 +202,7 @@ window.App = {
                     --red-light: #d10000;
                     --red-glow: rgba(209, 0, 0, 0.05);
                     --red-border: rgba(209, 0, 0, 0.2);
+                    --grad-logo: linear-gradient(135deg, #1d1d1f 0%, #d10000 120%);
                 }
                 .light-theme body, .light-theme #app-header, .light-theme #top-nav {
                     background-color: var(--bg) !important;

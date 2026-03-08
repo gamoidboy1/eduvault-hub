@@ -50,6 +50,7 @@
   --grad-red-glow: linear-gradient(135deg, rgba(239, 68, 68, .15), rgba(220, 38, 38, .08));
   --grad-surface: linear-gradient(160deg, #161619, #0f0f12);
   --grad-card: linear-gradient(145deg, #161619 0%, #111114 100%);
+  --grad-logo: linear-gradient(135deg, #FFFFFF 0%, #F87171 120%);
 
   /* ── Radius (Forced Sharp) ── */
   --r-xs: 0px;
