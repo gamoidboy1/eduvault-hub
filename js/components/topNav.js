@@ -5,6 +5,7 @@ window.TopNavComponent = {
 
     _studentTabs: [
         { id: 'dashboard', label: 'Home', icon: '' },
+        { id: 'requests', label: 'Requests', icon: '' },
         { id: 'subjects', label: 'Study', icon: '' }
     ],
 
@@ -48,7 +49,7 @@ window.TopNavComponent = {
                    justify-content:center; gap:10px; transition:all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
                    box-shadow: 0 4px 15px rgba(217, 43, 43, 0.25) !important; 
                    letter-spacing: 0.8px; text-transform: uppercase;"
-            onclick="AuthService.logout().then(() => location.reload())">
+            onclick="localStorage.removeItem('educonnect_session'); localStorage.removeItem('educonnect_view'); AuthService.logout().then(() => location.reload())">
             LOG OUT
           </button>
         </div>

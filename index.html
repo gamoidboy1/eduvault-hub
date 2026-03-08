@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Studiom — Jude C J</title>
+    <title>Acadex — Jude C J</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -22,29 +22,62 @@
 
 <body>
 
+    <!-- ══════ SPLASH SCREEN ══════ -->
+    <div id="splash-screen" style="position:fixed; inset:0; background:#060608; z-index:10000; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px;">
+        <img src="assets/logo.png" style="width:64px; height:64px; object-fit:contain; animation: pulse 1.5s infinite ease-in-out;">
+        <div style="font-family: 'Inter', sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; color: white; font-size: 0.75rem; margin-top: 4px; opacity: 0.9;">Acadex</div>
+        <div style="width:120px; height:2px; background:rgba(255,255,255,0.05); position:relative; overflow:hidden; border-radius:10px; margin-top: 8px;">
+            <div style="position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg, transparent, #EF4444, transparent); animation: loading 1.5s infinite linear;"></div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } }
+        @keyframes loading { to { left: 100%; } }
+    </style>
+
     <!-- ══════ LOGIN ══════ -->
-    <div id="login-overlay">
+    <div id="login-overlay" style="display: none;">
         <div class="login-card">
-            <div class="login-title">Studio<span>m</span></div>
+            <div class="login-title">Aca<span>dex</span></div>
             <div class="login-subtitle">v1.0 · Student Collaboration Platform</div>
 
             <div class="login-form">
-                <div class="form-row">
-                    <label>Quick Access Portals</label>
-                    <select id="login-quick-select" style="padding: 12px; font-weight: 600; cursor: pointer; border-radius: 0; background: var(--surface); color: white; border: 1px solid var(--border); width: 100%;">
-                        <!-- Populated by App.js -->
-                    </select>
-                </div>
-                <div class="btn-row" style="margin-top: 18px;">
-                    <button class="btn-solid-red w-full clicky-element" id="btn-login"
-                        style="flex:1;padding:14px;font-size:.9rem;font-weight:700;">ENTER HUB →</button>
-                </div>
-                <div id="login-msg" class="login-msg" style="margin-top: 12px; font-size: 0.75rem; text-align: center; font-weight: 600;"></div>
-            </div>
+                <form id="auth-form" onsubmit="event.preventDefault(); window.App.handleLogin();">
+                    <div class="form-row">
+                        <label>Email Address</label>
+                        <input type="email" id="login-email" placeholder="25cy308@mgits.ac.in" required style="padding: 12px; font-weight: 500; border-radius: 4px; background: var(--surface); color: white; border: 1px solid var(--border); width: 100%;">
+                    </div>
+                    <div class="form-row" style="margin-top: 14px; position:relative;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <label>Password</label>
+                            <a href="#" onclick="window.App.handleResetPassword()" style="font-size:0.7rem; color:var(--text-muted); text-decoration:none; font-weight:600;">Forgot Password?</a>
+                        </div>
+                        <input type="password" id="login-password" placeholder="••••••••" required style="padding: 12px; font-weight: 500; border-radius: 4px; background: var(--surface); color: white; border: 1px solid var(--border); width: 100%;">
+                    </div>
+                    <div class="btn-row" style="margin-top: 20px;">
+                        <button type="submit" class="btn-solid-red w-full clicky-element" id="btn-login"
+                            style="width:100%; padding:14px;font-size:.9rem;font-weight:700;">SIGN IN</button>
+                    </div>
+                </form>
 
-            <div
-                style="margin-top:24px;padding-top:14px;border-top:1px solid var(--border);font-size:.68rem;color:var(--text-muted);text-align:center;line-height:1.7;">
-                Select a dummy account above and click <strong style="color:var(--red-light);">Enter Hub</strong>
+                <div style="margin: 20px 0; display:flex; align-items:center; gap: 10px;">
+                    <hr style="flex:1; border:none; border-top:1px solid var(--border);">
+                    <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">OR</span>
+                    <hr style="flex:1; border:none; border-top:1px solid var(--border);">
+                </div>
+
+                <button class="btn-hollow clicky-element" style="width:100%; padding:14px; font-size:.85rem; font-weight:700; display:flex; gap:10px; align-items:center; justify-content:center; border:1px solid var(--border); background:var(--surface-2); color:white;" onclick="window.App.handleGoogleLogin()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                    </svg>
+                    Continue with Google
+                </button>
+
+                <div id="login-msg" class="login-msg" style="margin-top: 16px; font-size: 0.75rem; text-align: center; font-weight: 600;"></div>
             </div>
         </div>
     </div>
@@ -81,6 +114,7 @@
     <!-- ── Views ── -->
     <script src="js/views/dashboard.js"></script>
     <script src="js/views/subjects.js"></script>
+    <script src="js/views/requests.js"></script>
     <script src="js/views/subjectDetail.js"></script>
     <script src="js/views/moduleDetail.js"></script>
     <script src="js/views/facultyDashboard.js"></script>

@@ -43,6 +43,17 @@ window.FirestoreService = {
                 this._refreshActiveView();
             }
         }));
+
+        // 4. Sync Note Requests
+        this._unsubs.push(window.db.collection('note_requests').orderBy('createdAt', 'desc').onSnapshot(snap => {
+            if (!snap.empty) {
+                window.DUMMY.noteRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                this._refreshActiveView();
+            } else {
+                window.DUMMY.noteRequests = [];
+                this._refreshActiveView();
+            }
+        }));
     },
 
     _refreshActiveView() {
@@ -144,5 +155,71 @@ window.FirestoreService = {
             } catch (e) { console.error(e); }
         }
         return null;
+    },
+
+    // ── Note Requests Logic ───────────────────────────────────────────────
+    async addNoteRequest(studentId, studentName, branch, topic, description) {
+        if (window._firebaseReady) {
+            try {
+                const id = 'REQ-' + Date.now();
+                await window.db.collection('note_requests').doc(id).set({
+                    id, studentId, studentName, branch, topic, description, 
+                    createdAt: Date.now(), status: 'open', uploads: []
+                });
+                return { ok: true, id };
+            } catch (e) { return { ok: false, error: e.message }; }
+        }
+        // Fallback for dummy
+        const id = 'REQ-' + Date.now();
+        window.DUMMY.noteRequests.unshift({
+            id, studentId, studentName, branch, topic, description, 
+            createdAt: Date.now(), status: 'open', uploads: []
+        });
+        if (window.App) App.switchView('requests');
+        return { ok: true, id };
+    },
+
+    async addUploadToRequest(requestId, uploaderId, uploaderName, fileUrl, fileName, fileSize) {
+        if (window._firebaseReady) {
+            try {
+                const uploadId = 'UPL-' + Date.now();
+                const uploadObj = { uploadId, uploaderId, uploaderName, fileUrl, fileName, fileSize, createdAt: Date.now(), approved: false };
+                await window.db.collection('note_requests').doc(requestId).update({
+                    uploads: window.firebase.firestore.FieldValue.arrayUnion(uploadObj)
+                });
+                return { ok: true };
+            } catch (e) { return { ok: false, error: e.message }; }
+        }
+        // Fallback for dummy
+        const req = window.DUMMY.noteRequests.find(r => r.id === requestId);
+        if (req) {
+            req.uploads.push({ uploadId: 'UPL-' + Date.now(), uploaderId, uploaderName, fileUrl, fileName, fileSize, createdAt: Date.now(), approved: false });
+            if (window.App) App.switchView('requests');
+        }
+        return { ok: true };
+    },
+
+    async approveNoteUpload(requestId, uploadId) {
+        if (window._firebaseReady) {
+            try {
+                const reqRef = window.db.collection('note_requests').doc(requestId);
+                await window.db.runTransaction(async (transaction) => {
+                    const doc = await transaction.get(reqRef);
+                    if (!doc.exists) throw new Error("Document does not exist!");
+                    let uploads = doc.data().uploads || [];
+                    uploads = uploads.map(u => u.uploadId === uploadId ? { ...u, approved: true } : u);
+                    transaction.update(reqRef, { uploads, status: 'fulfilled' });
+                });
+                return { ok: true };
+            } catch (e) { return { ok: false, error: e.message }; }
+        }
+        // Fallback for dummy
+        const req = window.DUMMY.noteRequests.find(r => r.id === requestId);
+        if (req) {
+            req.uploads = req.uploads.map(u => u.uploadId === uploadId ? { ...u, approved: true } : u);
+            req.status = 'fulfilled';
+            if (window.App) App.switchView('requests');
+        }
+        return { ok: true };
     }
 };

@@ -1,4 +1,4 @@
-# STUDIOM v2.0
+# ACADEX v2.0
 > **Premium Educational Asset Management Platform**  
 > Stack: Vanilla HTML + CSS + JavaScript · Firebase (Auth, Firestore, Storage)
 
@@ -100,7 +100,7 @@ Follow these steps to upload your project to GitHub/GitLab:
 
 ## 🎨 Professional Theme Engine
 
-EduVault features a high-end **Dark/Light Theme** system.  
+Acadex features a high-end **Dark/Light Theme** system.  
 *   **Aesthetic**: Modern black/red high-contrast design.
 *   **Safe-to-Read**: Optimized typography and spacing.
 *   **Dynamic**: Real-time theme switching via the "Themes" button in the sidebar.

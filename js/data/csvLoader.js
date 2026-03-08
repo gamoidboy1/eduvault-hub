@@ -7,9 +7,9 @@ window.CSVData = {
     // Fallbacks provided in case this is run via direct file:// without a server
     // (most browsers block fetch() on file system due to CORS)
     fallbackStudents: `email,name,roll,branch,sem,cgpa,role,password
-jude@college.edu,Jude C J,25CY308,CS Cybersecurity,1st,9.1,student,cyber308
-rahul@college.edu,Rahul Kumar,25CY309,CS Cybersecurity,1st,8.5,student,student123
-prof.verma@college.edu,Prof. Anil Sharma,FAC-001,CS Cybersecurity,,,faculty,faculty123`,
+25cy308@mgits.ac.in,Jude C J,25CY308,CS Cybersecurity,1st,9.1,student,25cy308@mgits.ac.in
+25cy309@mgits.ac.in,Rahul Kumar,25CY309,CS Cybersecurity,1st,8.5,student,25cy309@mgits.ac.in
+prof.verma@mgits.ac.in,Prof. Anil Sharma,FAC-001,CS Cybersecurity,,,faculty,prof.verma@mgits.ac.in`,
 
     fallbackBranches: `branch,courses
 CS Cybersecurity,"CY301,CY302,CY303,CY304,CY305,CY306,MA201,CY308"

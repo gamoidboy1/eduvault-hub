@@ -1,4 +1,4 @@
-// js/data/dummy.js — EduConnect Hub v1.1 — Added Faculty Profile Images
+// js/data/dummy.js — Acadex v1.1 — Added Faculty Profile Images
 
 window.DUMMY = {
 
@@ -125,5 +125,63 @@ window.DUMMY = {
         activeModules: 24,
         avgSyllabus: '76%',
         studentsOnline: 247
-    }
+    },
+
+    noteRequests: [
+        {
+            id: 'REQ-1',
+            studentId: '25cs010@mgits.ac.in',
+            studentName: 'Alex Mercer',
+            topic: 'Network Security',
+            branch: 'CS Cybersecurity',
+            description: 'Can someone please upload the notes for Module 2? Specifically the part about Firewalls and IDS/IPS. Missed the class due to illness.',
+            createdAt: Date.now() - 86400000 * 2,
+            status: 'open',
+            uploads: []
+        },
+        {
+            id: 'REQ-2',
+            studentId: '25ec022@mgits.ac.in',
+            studentName: 'Elena Fisher',
+            topic: 'Cryptography',
+            branch: 'CS Cybersecurity',
+            description: 'Looking for handwritten notes on RSA and ECC from yesterday lecture.',
+            createdAt: Date.now() - 86400000 * 5,
+            status: 'fulfilled',
+            uploads: [
+                {
+                    uploadId: 'UPL-1',
+                    uploaderId: '25me045@mgits.ac.in',
+                    uploaderName: 'Nathan Drake',
+                    fileUrl: '#',
+                    fileName: 'Crypto_RSA_ECC_Notes.pdf',
+                    fileSize: '2.4 MB',
+                    createdAt: Date.now() - 86400000 * 4,
+                    approved: true
+                }
+            ]
+        },
+        {
+            id: 'REQ-3',
+            studentId: '25it008@mgits.ac.in',
+            studentName: 'Chloe Frazer',
+            topic: 'Ethical Hacking',
+            branch: 'CS Cybersecurity',
+            description: 'Need the Nmap scanning commands cheat sheet that Dr. Sharma shared today.',
+            createdAt: Date.now() - 3600000 * 4,
+            status: 'open',
+            uploads: [
+                {
+                    uploadId: 'UPL-2',
+                    uploaderId: '25cs010@mgits.ac.in',
+                    uploaderName: 'Alex Mercer',
+                    fileUrl: '#',
+                    fileName: 'Nmap_CheatSheet.pdf',
+                    fileSize: '1.1 MB',
+                    createdAt: Date.now() - 3600000 * 2,
+                    approved: false
+                }
+            ]
+        }
+    ]
 };

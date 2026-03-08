@@ -1,4 +1,4 @@
 email,name,roll,branch,sem,cgpa,role,password
-jude@college.edu,Jude C J,25CY308,CS Cybersecurity,1st,9.1,student,cyber308
-rahul@college.edu,Rahul Kumar,25CY309,CS Cybersecurity,1st,8.5,student,student123
-prof.verma@college.edu,Prof. Anil Sharma,FAC-001,CS Cybersecurity,,,faculty,faculty123
+25cy308@mgits.ac.in,Jude C J,25CY308,CS Cybersecurity,1st,9.1,student,25cy308@mgits.ac.in
+25cy309@mgits.ac.in,Rahul Kumar,25CY309,CS Cybersecurity,1st,8.5,student,25cy309@mgits.ac.in
+prof.verma@mgits.ac.in,Prof. Anil Sharma,FAC-001,CS Cybersecurity,,,faculty,prof.verma@mgits.ac.in

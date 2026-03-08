@@ -8,8 +8,6 @@ function esc(s) {
 window.App = {
     async init() {
         await CSVData.load();
-        this._populateQuickLogin();
-        this._bindLogin();
         
         // Initialize real-time sync if firebase is ready
         if (window.FirestoreService && window.FirestoreService.initLiveSync) {
@@ -22,64 +20,120 @@ window.App = {
                 this.closeNav();
             }
         });
-    },
 
-    _populateQuickLogin() {
-        const select = document.getElementById('login-quick-select');
-        if (!select) return;
-
-        const users = window.CSVData.students; // Contains both students and faculty
-        select.innerHTML = users.map(u => `
-            <option value="${u.email}" data-role="${u.role}">
-                ${u.role.toUpperCase()}: ${u.name} (${u.branch || 'General'})
-            </option>
-        `).join('');
-    },
-
-    _bindLogin() {
-        const btnLogin = document.getElementById('btn-login');
-        if (btnLogin) {
-            btnLogin.addEventListener('click', async () => {
-                const select = document.getElementById('login-quick-select');
-                if (!select) return;
-
-                const email = select.value;
-                const option = select.options[select.selectedIndex];
-                const role = option.dataset.role;
-                const msgEl = document.getElementById('login-msg');
-
-                if (msgEl) { msgEl.style.color = 'var(--text-muted)'; msgEl.textContent = 'Entering Hub...'; }
-
-                let user = window.CSVData.students.find(s => s.email === email);
-
+        // Auto-login from session storage to prevent refresh wipeout
+        const savedSession = localStorage.getItem('educonnect_session');
+        if (savedSession) {
+            try {
+                const data = JSON.parse(savedSession);
+                let user = window.CSVData.students.find(s => s.email === data.email);
                 if (user) {
-                    Object.assign(window.DUMMY.currentUser, user);
+                    const savedView = localStorage.getItem('educonnect_view') || 'dashboard';
+                    // Pre-set nav state so first render is correct
+                    if (window.TopNavComponent) window.TopNavComponent._current = savedView;
                     
-                    if (user.role === 'student' && user.branch && window.CSVData.branches[user.branch]) {
-                        const branchCourses = window.CSVData.branches[user.branch];
-                        if (!window.DUMMY._allSubjects) window.DUMMY._allSubjects = [...window.DUMMY.subjects];
-                        window.DUMMY.subjects = window.DUMMY._allSubjects.filter(s => branchCourses.includes(s.id));
-                    }
-
-                    if (msgEl) { msgEl.style.color = '#6EE7B7'; msgEl.textContent = `✓ Welcome, ${user.name}`; }
-                    setTimeout(() => this._launchApp(role), 400);
+                    this._loginUser(user, true); 
+                    this.switchView(savedView);
+                } else {
+                    this._showLogin();
                 }
-            });
+            } catch(e) {
+                this._showLogin();
+            }
+        } else {
+            this._showLogin();
         }
     },
 
-    _launchApp(role) {
+    async handleLogin() {
+        const email = document.getElementById('login-email').value.trim();
+        const pass = document.getElementById('login-password').value;
+        const msgEl = document.getElementById('login-msg');
+
+        if (!email || !pass) {
+            if (msgEl) { msgEl.style.color = 'var(--red-light)'; msgEl.textContent = 'Please enter email and password.'; }
+            return;
+        }
+
+        if (msgEl) { msgEl.style.color = 'var(--text-muted)'; msgEl.textContent = 'Authenticating...'; }
+
+        const res = await window.AuthService.login(email, pass);
+        
+        if (res.ok) {
+            if (msgEl) { msgEl.style.color = '#6EE7B7'; msgEl.textContent = `✓ Welcome, ${window.DUMMY.currentUser.name}`; }
+            setTimeout(() => this._loginUser(window.DUMMY.currentUser, false), 400);
+        } else {
+            if (msgEl) { msgEl.style.color = 'var(--red-light)'; msgEl.textContent = res.error; }
+        }
+    },
+
+    async handleGoogleLogin() {
+        const msgEl = document.getElementById('login-msg');
+        if (msgEl) { msgEl.style.color = 'var(--text-muted)'; msgEl.textContent = 'Redirecting to Google...'; }
+
+        const res = await window.AuthService.googleLogin();
+        
+        if (res.ok) {
+            if (msgEl) { msgEl.style.color = '#6EE7B7'; msgEl.textContent = `✓ Welcome, ${window.DUMMY.currentUser.name}`; }
+            setTimeout(() => this._loginUser(window.DUMMY.currentUser, false), 400);
+        } else {
+            if (msgEl) { msgEl.style.color = 'var(--red-light)'; msgEl.textContent = res.error; }
+        }
+    },
+
+    async handleResetPassword() {
+        const email = document.getElementById('login-email').value.trim();
+        const msgEl = document.getElementById('login-msg');
+
+        if (!email) {
+            if (msgEl) { msgEl.style.color = 'var(--red-light)'; msgEl.textContent = 'Please enter your email address first.'; }
+            return;
+        }
+
+        if (msgEl) { msgEl.style.color = 'var(--text-muted)'; msgEl.textContent = 'Sending reset link...'; }
+
+        const res = await window.AuthService.resetPassword(email);
+        
+        if (res.ok) {
+            if (msgEl) { msgEl.style.color = '#6EE7B7'; msgEl.textContent = `✓ Password reset email sent to ${email}`; }
+        } else {
+            if (msgEl) { msgEl.style.color = 'var(--red-light)'; msgEl.textContent = res.error; }
+        }
+    },
+
+    _loginUser(user, isAutoRestore = false) {
+        Object.assign(window.DUMMY.currentUser, user);
+        
+        if (user.role === 'student' && user.branch && window.CSVData.branches[user.branch]) {
+            const branchCourses = window.CSVData.branches[user.branch];
+            if (!window.DUMMY._allSubjects) window.DUMMY._allSubjects = [...window.DUMMY.subjects];
+            window.DUMMY.subjects = window.DUMMY._allSubjects.filter(s => branchCourses.includes(s.id));
+        }
+
+        localStorage.setItem('educonnect_session', JSON.stringify({ email: user.email }));
+        
+        document.getElementById('splash-screen').style.display = 'none';
         document.getElementById('login-overlay').style.display = 'none';
         document.getElementById('app').style.display = 'block';
 
         HeaderComponent.render();
         TopNavComponent.render();
 
-        if (role === 'faculty') this.switchView('dashboard');
-        else this.switchView('dashboard');
+        if (!isAutoRestore) {
+            if (user.role === 'faculty') this.switchView('dashboard');
+            else this.switchView('dashboard');
+        }
     },
 
+    _showLogin() {
+        document.getElementById('splash-screen').style.display = 'none';
+        document.getElementById('login-overlay').style.display = 'flex';
+    },
+
+
+
     switchView(view) {
+        localStorage.setItem('educonnect_view', view);
         window.scrollTo({ top: 0, behavior: 'instant' });
         const role = window.DUMMY.currentUser.role;
 
@@ -90,7 +144,7 @@ window.App = {
             return;
         }
 
-        const tabMap = { subjects: 'subjects', faculty: 'faculty', profile: 'profile' };
+        const tabMap = { subjects: 'subjects', faculty: 'faculty', profile: 'profile', requests: 'requests' };
         if (tabMap[view] !== undefined) {
             TopNavComponent.setActive(tabMap[view]);
         }
@@ -99,6 +153,7 @@ window.App = {
             case 'subjects': SubjectsView.render(); break;
             case 'faculty': FacultyView.render(); break;
             case 'profile': ProfileView.render(); break;
+            case 'requests': RequestsView.render(); break;
         }
     },
 
@@ -164,6 +219,26 @@ window.App = {
             `;
             document.head.appendChild(style);
         }
+    },
+
+    getSubjectColor(identifier) {
+        const palette = ['#EF4444', '#F97316', '#EAB308', '#22C55E', '#3B82F6', '#8B5CF6', '#EC4899', '#06B6D4'];
+        
+        // Find subject index globally for consistency
+        const subjects = window.DUMMY._allSubjects || window.DUMMY.subjects || [];
+        const index = subjects.findIndex(s => s.id === identifier || s.code === identifier || s.name === identifier);
+        
+        if (index !== -1) {
+            return palette[index % palette.length];
+        }
+
+        // If not found, hash the identifier string to pick a stable color
+        let hash = 0;
+        const str = String(identifier || '');
+        for (let i = 0; i < str.length; i++) {
+            hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        return palette[Math.abs(hash) % palette.length];
     },
 
     toggleNav() {
