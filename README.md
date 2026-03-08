@@ -1,4 +1,4 @@
-# EDUVAULT v2.0
+# STUDIOM v2.0
 > **Premium Educational Asset Management Platform**  
 > Stack: Vanilla HTML + CSS + JavaScript · Firebase (Auth, Firestore, Storage)
 
@@ -89,6 +89,12 @@ Follow these steps to upload your project to GitHub/GitLab:
    ```bash
    git push -u origin main
    ```
+
+## 🎨 Customizing the Logo
+
+1. Create an `assets` folder in the root directory.
+2. Add your logo image as `logo.png` inside the `assets` folder.
+3. The platform will automatically detect and use your logo, falling back to the text logo if the file is missing.
 
 ---
 

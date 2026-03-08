@@ -13,16 +13,16 @@
   --surface-3: #1e1e23;
   --surface-4: #252529;
 
-  /* ── Red Accents ── */
-  --red: #EF4444;
-  --red-dark: #DC2626;
-  --red-darker: #B91C1C;
-  --red-light: #F87171;
-  --red-glow: rgba(239, 68, 68, 0.10);
-  --red-glow-md: rgba(239, 68, 68, 0.18);
-  --red-glow-lg: rgba(239, 68, 68, 0.25);
-  --red-border: rgba(239, 68, 68, 0.30);
-  --red-border-strong: rgba(239, 68, 68, 0.50);
+  /* ── Indigo Accents (Friendly & Trustworthy) ── */
+  --red: #6366F1;
+  --red-dark: #4F46E5;
+  --red-darker: #4338CA;
+  --red-light: #818CF8;
+  --red-glow: rgba(99, 102, 241, 0.10);
+  --red-glow-md: rgba(99, 102, 241, 0.18);
+  --red-glow-lg: rgba(99, 102, 241, 0.25);
+  --red-border: rgba(99, 102, 241, 0.30);
+  --red-border-strong: rgba(99, 102, 241, 0.50);
 
   /* ── Accent Colors for Modules ── */
   --accent-orange: #F97316;
@@ -45,9 +45,9 @@
   --border-strong: rgba(255, 255, 255, 0.18);
 
   /* ── Gradients ── */
-  --grad-hero: linear-gradient(135deg, #130404 0%, #1a0606 40%, #120303 100%);
-  --grad-red: linear-gradient(135deg, #EF4444, #DC2626);
-  --grad-red-glow: linear-gradient(135deg, rgba(239, 68, 68, .15), rgba(220, 38, 38, .08));
+  --grad-hero: linear-gradient(135deg, #060608 0%, #0f0f12 100%);
+  --grad-red: linear-gradient(135deg, #6366F1, #4F46E5);
+  --grad-red-glow: linear-gradient(135deg, rgba(99, 102, 241, .15), rgba(79, 70, 229, .08));
   --grad-surface: linear-gradient(160deg, #161619, #0f0f12);
   --grad-card: linear-gradient(145deg, #161619 0%, #111114 100%);
 
