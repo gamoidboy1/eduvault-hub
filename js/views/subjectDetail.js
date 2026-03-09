@@ -247,7 +247,7 @@ window.SubjectDetailView = {
             <div style="font-size: 0.8rem; color: var(--text-2); margin-top: 4px; line-height: 1.4;">Stuck on a PYQ? Get instant hints, explanations, and doubts cleared.</div>
           </div>
         </div>
-        <button class="clicky-element" style="flex-shrink: 0; background: linear-gradient(135deg, #8B5CF6, #3B82F6); border: none; box-shadow: 0 4px 15px rgba(59,130,246,0.3); padding: 10px 18px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; gap: 8px; color: white; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="window.open('https://gemini.google.com/', '_blank')">
+        <button class="clicky-element" style="flex-shrink: 0; background: linear-gradient(135deg, #8B5CF6, #3B82F6); border: none; box-shadow: 0 4px 15px rgba(59,130,246,0.3); padding: 10px 18px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; gap: 8px; color: white; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="window.SubjectDetailView._openAIWorkflowModal('${subject.id}')">
           <span style="font-size: 0.85rem;">Ask Gemini</span>
           <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
         </button>
@@ -301,8 +301,159 @@ window.SubjectDetailView = {
       title: `Module ${i + 1}`,
       lastModified: Date.now() - (i * 86400000),
       chapters: [
-        { id: `${subject.id}-m${i + 1}c1`, title: 'Introduction', size: '1.2 MB', uploadDate: 'Oct 01, 2025' },
       ]
     }));
+  },
+
+  _openAIWorkflowModal(subjectId) {
+    const existing = document.getElementById('ai-workflow-modal');
+    if (existing) existing.remove();
+
+    const subject = window.DUMMY.subjects.find(s => s.id === subjectId);
+    
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.id = 'ai-workflow-modal';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);z-index:100000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity 0.3s ease;';
+    
+    // Core HTML
+    overlay.innerHTML = `
+      <div style="background:var(--surface); border:1px solid rgba(139,92,246,0.3); border-radius:var(--r-xl); width:100%; max-width:440px; box-shadow:0 20px 50px rgba(0,0,0,0.5); overflow:hidden; transform:scale(0.95); transition:transform 0.3s ease; display:flex; flex-direction:column;" id="ai-workflow-card">
+        
+        <!-- Header -->
+        <div style="padding:20px; background:linear-gradient(135deg, rgba(139,92,246,0.1), rgba(59,130,246,0.1)); border-bottom:1px solid rgba(139,92,246,0.2); display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg, #8B5CF6, #3B82F6); display:flex; align-items:center; justify-content:center; box-shadow:0 2px 10px rgba(139,92,246,0.3);">
+                    <span style="font-size:1.1rem;">✨</span>
+                </div>
+                <div>
+                   <div style="font-weight:800; color:white; font-size:1.05rem;">Ask Gemini</div>
+                   <div style="font-size:0.7rem; color:var(--text-muted); font-weight:600;">Subject: ${subject.name}</div>
+                </div>
+            </div>
+            <button id="ai-wf-close" style="background:none; border:none; color:var(--text-muted); font-size:1.6rem; cursor:pointer; padding:0 8px;">&times;</button>
+        </div>
+
+        <!-- Body: Step 1 Options -->
+        <div id="ai-wf-step1" style="padding:24px; display:flex; flex-direction:column; gap:12px;">
+            <div style="font-size:0.85rem; color:var(--text-2); margin-bottom:4px; text-align:center;">How would you like to interact?</div>
+            
+            <button id="btn-custom-doubt" class="clicky-element" style="background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; align-items:center; gap:16px; cursor:pointer; text-align:left; transition:all 0.2s;">
+                <div style="width:40px; height:40px; border-radius:10px; background:rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:center; font-size:1.2rem;">💬</div>
+                <div style="flex:1;">
+                    <div style="font-weight:700; color:white; font-size:0.95rem;">Ask Custom Doubt</div>
+                    <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">Go straight to Gemini</div>
+                </div>
+            </button>
+            
+            <button id="btn-enter-topic" class="clicky-element" style="background:linear-gradient(135deg, rgba(139,92,246,0.1), rgba(59,130,246,0.1)); border:1px solid rgba(139,92,246,0.4); border-radius:12px; padding:16px; display:flex; align-items:center; gap:16px; cursor:pointer; text-align:left; transition:all 0.2s;">
+                <div style="width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg, #8B5CF6, #3B82F6); box-shadow:0 4px 10px rgba(139,92,246,0.3); display:flex; align-items:center; justify-content:center; color:white; font-size:1.2rem;">📚</div>
+                <div style="flex:1;">
+                    <div style="font-weight:700; color:white; font-size:0.95rem;">Enter Topic & Material</div>
+                    <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">Auto-fetch PDF & prepare prompt</div>
+                </div>
+            </button>
+        </div>
+
+        <!-- Body: Step 2 Enter Topic -->
+        <div id="ai-wf-step2" style="padding:24px; display:none; flex-direction:column; gap:16px;">
+             <div style="font-size:0.85rem; color:var(--text-2); font-weight:600;">What topic do you need help with?</div>
+             <input type="text" id="ai-wf-topic-input" placeholder="e.g., Firewalls, Cryptography..." style="width:100%; padding:14px; background:var(--surface-2); border:1px solid #8B5CF6; border-radius:8px; color:white; font-size:0.95rem; outline:none; box-shadow:0 0 0 2px rgba(139,92,246,0.2);">
+             <button id="btn-search-topic" class="btn-solid-red clicky-element" style="padding:14px; background:linear-gradient(135deg, #8B5CF6, #3B82F6); border:none; box-shadow:0 4px 15px rgba(59,130,246,0.3); font-size:0.95rem; font-weight:700; border-radius:8px; color:white; cursor:pointer;">Find Material & Continue</button>
+             <button id="btn-back-s1" style="background:none; border:none; color:var(--text-muted); font-size:0.8rem; cursor:pointer; font-weight:600; padding:8px;">← Back</button>
+        </div>
+
+        <!-- Body: Step 3 Success -->
+        <div id="ai-wf-step3" style="padding:30px 24px; display:none; flex-direction:column; align-items:center; gap:16px; text-align:center;">
+             <div id="ai-wf-status-icon" style="font-size:2.5rem; animation: pulse 1s infinite alternate;">🔍</div>
+             <div style="width:100%;">
+                <div id="ai-wf-status-title" style="font-weight:800; color:white; font-size:1.05rem; margin-bottom:6px;">Scanning Modules...</div>
+                <div id="ai-wf-status-desc" style="font-size:0.85rem; color:var(--text-muted);">Looking for relevant documents...</div>
+             </div>
+        </div>
+
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+    
+    setTimeout(() => {
+        overlay.style.opacity = '1';
+        document.getElementById('ai-workflow-card').style.transform = 'scale(1)';
+    }, 10);
+
+    const close = () => {
+        overlay.style.opacity = '0';
+        document.getElementById('ai-workflow-card').style.transform = 'scale(0.95)';
+        setTimeout(() => overlay.remove(), 300);
+    };
+
+    document.getElementById('ai-wf-close').onclick = close;
+    overlay.onclick = (e) => { if (e.target === overlay) close(); };
+
+    document.getElementById('btn-custom-doubt').onclick = () => {
+        window.open('https://gemini.google.com/', '_blank');
+        close();
+    };
+
+    document.getElementById('btn-enter-topic').onclick = () => {
+        document.getElementById('ai-wf-step1').style.display = 'none';
+        document.getElementById('ai-wf-step2').style.display = 'flex';
+        document.getElementById('ai-wf-topic-input').focus();
+    };
+
+    document.getElementById('btn-back-s1').onclick = () => {
+        document.getElementById('ai-wf-step2').style.display = 'none';
+        document.getElementById('ai-wf-step1').style.display = 'flex';
+    };
+
+    document.getElementById('btn-search-topic').onclick = () => {
+        const topic = document.getElementById('ai-wf-topic-input').value.trim() || 'the subject';
+        
+        document.getElementById('ai-wf-step2').style.display = 'none';
+        document.getElementById('ai-wf-step3').style.display = 'flex';
+
+        setTimeout(() => {
+            const docName = `${subject.code}_${topic.replace(/\\s+/g, '_')}_Material.pdf`;
+            
+            document.getElementById('ai-wf-status-icon').style.animation = 'none';
+            document.getElementById('ai-wf-status-icon').innerHTML = '📄<div style="font-size:0.5em; margin-top:-10px;">✅</div>';
+            document.getElementById('ai-wf-status-title').innerText = 'Ready!';
+            document.getElementById('ai-wf-status-desc').innerHTML = `
+                <div style="margin-bottom:12px; font-size:0.8rem;">Downloaded: <strong>${docName}</strong></div>
+                <div style="background:var(--surface-2); padding:10px; border-radius:6px; font-size:0.75rem; color:var(--text-2); border:1px solid rgba(139,92,246,0.3); text-align:left; font-family:var(--font); position:relative;">
+                    <span style="font-size:0.6rem; color:#8B5CF6; font-weight:800; text-transform:uppercase; position:absolute; top:-8px; background:var(--surface); padding:0 4px; left:8px;">Copied to Clipboard</span>
+                    "Explain ${topic} to me in detail using the concepts from the attached document. Keep it educational."
+                </div>
+            `;
+
+            const promptText = `Explain ${topic} to me in detail using the concepts from the attached document. Keep it educational.`;
+            navigator.clipboard.writeText(promptText).catch(() => {});
+
+            // Create a valid dummy PDF Blob to download
+            const basicPdfData = 'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwogIC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAvTWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0KPj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAgL1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSCj4+CiAgPj4KICAvQ29udGVudHMgNSAwIFIKPj4KZW5kb2JqCgo0IDAgb2JqCjw8CiAgL1R5cGUgL0ZvbnQKICAvU3VidHlwZSAvVHlwZTUKICAvQmFzZUZvbnQgL1RpbWVzLVJvbWFuCj4+CmVuZG9iagoKNSAwIG9iago8PAogIC9MZW5ndGggNDQKPj4Kc3RyZWFtCkJUCjcwIDUwIFRECi9GMSAxMiBUZgpUago4RVQgQWNhZGV4IER1bW15IFBERikKWFQKRQplbmRzdHJlYW0KZW5kb2JqCgp4cmVmCjAgNgowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwMTAgMDAwMDAgbiAKMDAwMDAwMDA2MCAwMDAwMCBuIAowMDAwMDAwMTU3IDAwMDAwIG4gCjAwMDAwMDAyNTMgMDAwMDAgbiAKMDAwMDAwMDM0NiAwMDAwMCBuIAp0cmFpbGVyCjw8CiAgL1NpemUgNgogIC9Sb290IDEgMCBSCj4+CnN0YXJ0eHJlZgo0NDEKJSVFT0YK';
+            const a = document.createElement('a');
+            a.href = 'data:application/pdf;base64,' + basicPdfData;
+            a.download = docName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            const proceedBtn = document.createElement('button');
+            proceedBtn.className = 'clicky-element';
+            proceedBtn.style.cssText = 'width:100%; padding:14px; background:linear-gradient(135deg, #8B5CF6, #3B82F6); border:none; box-shadow:0 4px 15px rgba(59,130,246,0.3); font-size:0.95rem; font-weight:700; border-radius:8px; color:white; cursor:pointer; margin-top:12px; display:flex; align-items:center; justify-content:center; gap:8px;';
+            proceedBtn.innerHTML = 'Paste & Drop in Gemini <span style="font-size:1.1rem">→</span>';
+            proceedBtn.onclick = () => {
+                window.open('https://gemini.google.com/', '_blank');
+                close();
+            };
+            document.getElementById('ai-wf-step3').appendChild(proceedBtn);
+
+        }, 1500);
+    };
+
+    document.getElementById('ai-wf-topic-input').addEventListener('keypress', (e) => {
+        if(e.key === 'Enter') document.getElementById('btn-search-topic').click();
+    });
   }
 };
