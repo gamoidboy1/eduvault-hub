@@ -71,13 +71,13 @@
   --glow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 
   /* ── Spacing ── */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
+  --space-1: 5px;
+  --space-2: 10px;
+  --space-3: 14px;
+  --space-4: 18px;
+  --space-5: 24px;
+  --space-6: 30px;
+  --space-8: 40px;
 
   /* ── Layout ── */
   --header-h: 54px;
@@ -91,14 +91,14 @@
 
   /* ── Font ── */
   --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-size-2xs: 0.62rem;
-  --font-size-xs: 0.70rem;
-  --font-size-sm: 0.80rem;
-  --font-size-base: 0.88rem;
-  --font-size-md: 0.95rem;
-  --font-size-lg: 1.05rem;
-  --font-size-xl: 1.20rem;
-  --font-size-2xl: 1.50rem;
+  --font-size-2xs: 0.75rem;
+  --font-size-xs: 0.82rem;
+  --font-size-sm: 0.92rem;
+  --font-size-base: 1.0rem;
+  --font-size-md: 1.1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.4rem;
+  --font-size-2xl: 1.8rem;
 }
 
 /* ── RESET ────────────────────────────────────────────────── */
@@ -115,7 +115,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;

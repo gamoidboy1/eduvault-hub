@@ -259,12 +259,12 @@ window.App = {
                     filter: brightness(0.8) !important;
                 }
                 .light-theme .t-box, .light-theme .stat-box, .light-theme .t-tab { background: var(--surface) !important; border: 1px solid var(--border) !important; }
-                .light-theme .t-tab:hover { background: var(--surface-2) !important; }
+                .light-theme .t-tab:hover { background: rgba(0, 0, 0, 0.02) !important; color: var(--text) !important; }
                 .light-theme .tag-gray, .light-theme .tag { background: var(--surface-2) !important; color: var(--text-2) !important; border: 1px solid var(--border) !important; }
                 .light-theme .clicky-element:not(.btn-logout-hover):hover, .light-theme .clicky:hover { background: var(--surface-2) !important; }
                 .light-theme h1, .light-theme h2, .light-theme .title, .light-theme .hero-name, .light-theme .subject-name, .light-theme .module-title, .light-theme .section-title, .light-theme .meta-text { color: var(--text) !important; }
                 .light-theme .section-label { color: var(--text-muted) !important; border-bottom-color: var(--border) !important; }
-                .light-theme .t-tab.active { background: var(--red-glow) !important; color: var(--red-light) !important; }
+                .light-theme .t-tab.active { background: rgba(0, 0, 0, 0.04) !important; color: var(--text) !important; }
                 .light-theme input { background: var(--surface) !important; color: var(--text) !important; border-color: var(--border) !important; }
             `;
             document.head.appendChild(style);

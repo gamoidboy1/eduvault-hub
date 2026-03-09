@@ -47,7 +47,7 @@
 }
 
 .hero-greet {
-    font-size: .65rem;
+    font-size: .75rem;
     font-weight: 700;
     color: var(--red-light);
     text-transform: uppercase;
@@ -57,7 +57,7 @@
 }
 
 .hero-name {
-    font-size: 1.55rem;
+    font-size: 1.75rem;
     font-weight: 800;
     color: #fff;
     line-height: 1.15;
@@ -65,7 +65,7 @@
 }
 
 .hero-meta {
-    font-size: .73rem;
+    font-size: .82rem;
     color: var(--text-3);
     margin-top: 6px;
     display: flex;
@@ -74,14 +74,7 @@
     flex-wrap: wrap;
 }
 
-.hero-cgpa {
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--red-light);
-    line-height: 1;
-    letter-spacing: -1px;
-    text-shadow: 0 0 24px rgba(239, 68, 68, .4);
-}
+
 
 .dot {
     width: 3px;
@@ -125,7 +118,7 @@
 }
 
 .stat-card .stat-val {
-    font-size: 1.45rem;
+    font-size: 1.65rem;
     font-weight: 800;
     color: var(--red-light);
     line-height: 1.1;
@@ -133,7 +126,7 @@
 }
 
 .stat-card .stat-lbl {
-    font-size: 0.60rem;
+    font-size: 0.70rem;
     font-weight: 600;
     color: var(--text-muted);
     text-transform: uppercase;
@@ -357,7 +350,7 @@ textarea {
 /* ── TAGS / BADGES ───────────────────────────────────────── */
 .tag {
     display: inline-block;
-    font-size: 0.58rem;
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.4px;
     text-transform: uppercase;
@@ -399,7 +392,7 @@ textarea {
 
 /* Status badges */
 .status-badge {
-    font-size: 0.58rem;
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.4px;
     text-transform: uppercase;
@@ -507,7 +500,7 @@ textarea {
 }
 
 .issue-cat {
-    font-size: 0.58rem;
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.4px;
     text-transform: uppercase;
@@ -715,7 +708,7 @@ textarea {
 
 /* ── QUEUE ITEM ──────────────────────────────────────────── */
 .queue-type-tag {
-    font-size: 0.58rem;
+    font-size: 0.68rem;
     font-weight: 700;
     border-radius: var(--r-pill);
     padding: 2px 8px;
@@ -787,7 +780,7 @@ textarea {
 /* ── FACULTY SELECTOR PILLS ──────────────────────────────── */
 .selector-pill {
     padding: 7px 14px;
-    font-size: .74rem;
+    font-size: .84rem;
     font-weight: 600;
     font-family: var(--font);
     border-radius: var(--r-pill);

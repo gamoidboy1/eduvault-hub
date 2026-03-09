@@ -231,13 +231,39 @@ window.SubjectDetailView = {
 
   _renderPYQ(subject) {
     const pyq = subject.pyq || [];
+    
+    const aiBanner = `
+      <div class="glass-panel" style="margin-bottom:24px; border: 1px solid rgba(139,92,246,0.3); background: linear-gradient(135deg, rgba(139,92,246,0.06), rgba(59,130,246,0.06)); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; padding: 18px 20px;">
+        <div style="position:absolute; top:0; left:0; width:4px; height:100%; background: linear-gradient(to bottom, #8B5CF6, #3B82F6);"></div>
+        <div style="display:flex; align-items:center; gap: 16px;">
+          <div style="width:46px; height:46px; border-radius: 50%; background: linear-gradient(135deg, #8B5CF6, #3B82F6); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(139,92,246,0.4); animation: pulse 2s infinite;">
+            <span style="font-size: 1.3rem;">✨</span>
+          </div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px;">
+              Ask AI 
+              <span style="font-size: 0.6rem; background: rgba(139,92,246,0.2); border: 1px solid rgba(139,92,246,0.4); padding: 3px 6px; border-radius: 4px; font-weight: 800; color: #D8B4FE; text-transform: uppercase;">Beta</span>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-2); margin-top: 4px; line-height: 1.4;">Stuck on a PYQ? Get instant hints, explanations, and doubts cleared.</div>
+          </div>
+        </div>
+        <button class="clicky-element" style="flex-shrink: 0; background: linear-gradient(135deg, #8B5CF6, #3B82F6); border: none; box-shadow: 0 4px 15px rgba(59,130,246,0.3); padding: 10px 18px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; gap: 8px; color: white; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="window.open('https://gemini.google.com/', '_blank')">
+          <span style="font-size: 0.85rem;">Ask Gemini</span>
+          <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+        </button>
+        <!-- Floating shapes for aesthetics -->
+        <div style="position: absolute; right: -20px; top: -20px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%); border-radius: 50%; pointer-events: none;"></div>
+      </div>`;
+
     if (!pyq.length) {
       return `
+        ${aiBanner}
         <div style="padding:48px 24px;text-align:center;">
           <div style="color:var(--text-muted);font-size:.85rem;">No previous year questions available for this subject.</div>
         </div>`;
     }
     return `
+      ${aiBanner}
       <div class="section-label" style="padding-left:0; padding-right:0;">Previous Year Questions</div>
       <div style="padding:0 0;">
         ${pyq.map((entry, ei) => `
