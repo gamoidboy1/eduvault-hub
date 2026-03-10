@@ -44,6 +44,33 @@ window.ProfileView = {
 
       <div style="margin-bottom: 20px;"></div>
 
+      <!-- System Preferences -->
+      <div class="section-label" style="padding-left:0; padding-right:0;">System Preferences</div>
+      <div class="t-box" style="margin-top:0;">
+        <div style="padding:0 16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0; border-bottom:1px solid rgba(255,255,255,.04);">
+            <div style="display:flex; flex-direction:column; gap:2px;">
+              <span style="font-size:.77rem;color:var(--text-3);font-weight:600;">Manual Focus Mode</span>
+              <span style="font-size:.62rem;color:var(--text-muted);font-weight:500;">Overrides automatic scheduling</span>
+            </div>
+            <button onclick="window.App.setFocusMode(localStorage.getItem('acadex_focus_mode') !== 'true'); ProfileView.render();" 
+                    class="btn-tiny ${localStorage.getItem('acadex_focus_mode') === 'true' ? 'btn-active' : ''}">
+              ${localStorage.getItem('acadex_focus_mode') === 'true' ? 'Disable Sanctuary' : 'Enter Sanctuary'}
+            </button>
+          </div>
+          
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0; border-bottom:1px solid rgba(255,255,255,.04);">
+             <span style="font-size:.77rem;color:var(--text-3);font-weight:600;">Auto-Switching</span>
+             <span style="font-size:.70rem;color:var(--accent-light);font-weight:700;text-transform:uppercase;letter-spacing:1px;">ACTIVE</span>
+          </div>
+          
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;">
+             <span style="font-size:.77rem;color:var(--text-3);font-weight:600;">Legacy Light Theme</span>
+             <button onclick="window.App.toggleTheme(); ProfileView.render();" class="btn-tiny">Toggle</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Account Details -->
       <div class="section-label" style="padding-left:0; padding-right:0;">Account Details</div>
       <div class="t-box" style="margin-top:0;">
@@ -53,11 +80,9 @@ window.ProfileView = {
           ${this._row(isFaculty ? 'Employee ID' : 'Reg. Number', u.roll)}
           ${this._row('Department', u.branch)}
           ${isFaculty ? '' : this._row('Semester', 'Semester ' + u.sem)}
-          ${this._row('Academic Year', '2025–2026')}
-          ${this._row('Institution', 'ABCD Institute of Technology')}
+          ${this._row('Academic Year', u.batch || '2025–2026')}
+          ${this._row('Institution', 'ABCD Engineering College')}
         </div>
-      </div>
-
       </div>
     `;
   },

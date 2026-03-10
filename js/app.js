@@ -8,17 +8,14 @@ function esc(s) {
 window.App = {
     async init() {
         await CSVData.load();
-        
+
         // Initialize real-time sync if firebase is ready
         if (window.FirestoreService && window.FirestoreService.initLiveSync) {
             window.FirestoreService.initLiveSync();
         }
 
-        // Restore Theme before rendering anything
-        const savedTheme = localStorage.getItem('acadex_theme');
-        if (savedTheme === 'light') {
-            this.toggleTheme(true);
-        }
+        // Apply theme mode based on time and settings
+        this.applyThemeMode();
 
         // Close nav on overlay click
         document.body.addEventListener('click', (e) => {
@@ -37,13 +34,13 @@ window.App = {
                     const savedView = localStorage.getItem('educonnect_view') || 'dashboard';
                     // Pre-set nav state so first render is correct
                     if (window.TopNavComponent) window.TopNavComponent._current = savedView;
-                    
-                    this._loginUser(user, true); 
+
+                    this._loginUser(user, true);
                     this.switchView(savedView);
                 } else {
                     this._showLogin();
                 }
-            } catch(e) {
+            } catch (e) {
                 this._showLogin();
             }
         } else {
@@ -68,19 +65,19 @@ window.App = {
         const msgEl = document.getElementById('login-msg');
 
         if (!email || !pass) {
-            if (msgEl) { msgEl.style.color = 'var(--red-light)'; msgEl.textContent = 'Please enter email and password.'; }
+            if (msgEl) { msgEl.style.color = 'var(--text-red-lt)'; msgEl.textContent = 'Please enter email and password.'; }
             return;
         }
 
         if (msgEl) { msgEl.style.color = 'var(--text-muted)'; msgEl.textContent = 'Authenticating...'; }
 
         const res = await window.AuthService.login(email, pass);
-        
+
         if (res.ok) {
             if (msgEl) { msgEl.style.color = '#6EE7B7'; msgEl.textContent = `✓ Welcome, ${window.DUMMY.currentUser.name}`; }
             setTimeout(() => this._loginUser(window.DUMMY.currentUser, false), 400);
         } else {
-            if (msgEl) { msgEl.style.color = 'var(--red-light)'; msgEl.textContent = res.error; }
+            if (msgEl) { msgEl.style.color = 'var(--accent-light)'; msgEl.textContent = res.error; }
         }
     },
 
@@ -89,12 +86,12 @@ window.App = {
         if (msgEl) { msgEl.style.color = 'var(--text-muted)'; msgEl.textContent = 'Redirecting to Google...'; }
 
         const res = await window.AuthService.googleLogin();
-        
+
         if (res.ok) {
             if (msgEl) { msgEl.style.color = '#6EE7B7'; msgEl.textContent = `✓ Welcome, ${window.DUMMY.currentUser.name}`; }
             setTimeout(() => this._loginUser(window.DUMMY.currentUser, false), 400);
         } else {
-            if (msgEl) { msgEl.style.color = 'var(--red-light)'; msgEl.textContent = res.error; }
+            if (msgEl) { msgEl.style.color = 'var(--accent-light)'; msgEl.textContent = res.error; }
         }
     },
 
@@ -103,18 +100,18 @@ window.App = {
         const msgEl = document.getElementById('login-msg');
 
         if (!email) {
-            if (msgEl) { msgEl.style.color = 'var(--red-light)'; msgEl.textContent = 'Please enter your email address first.'; }
+            if (msgEl) { msgEl.style.color = 'var(--accent-light)'; msgEl.textContent = 'Please enter your email address first.'; }
             return;
         }
 
         if (msgEl) { msgEl.style.color = 'var(--text-muted)'; msgEl.textContent = 'Sending reset link...'; }
 
         const res = await window.AuthService.resetPassword(email);
-        
+
         if (res.ok) {
             if (msgEl) { msgEl.style.color = '#6EE7B7'; msgEl.textContent = `✓ Password reset email sent to ${email}`; }
         } else {
-            if (msgEl) { msgEl.style.color = 'var(--red-light)'; msgEl.textContent = res.error; }
+            if (msgEl) { msgEl.style.color = 'var(--accent-light)'; msgEl.textContent = res.error; }
         }
     },
 
@@ -127,27 +124,25 @@ window.App = {
         const email = credentials[role];
         const emailInput = document.getElementById('login-email');
         const passInput = document.getElementById('login-password');
-        
+
         if (emailInput && passInput && email) {
             emailInput.value = email;
-            passInput.value = email; // Password is same as email in dummy logic
-            
-            // Highlight the inputs briefly
-            emailInput.style.borderColor = 'var(--red-light)';
-            passInput.style.borderColor = 'var(--red-light)';
+            passInput.value = email;
+
+            emailInput.style.borderColor = 'var(--accent-light)';
+            passInput.style.borderColor = 'var(--accent-light)';
             setTimeout(() => {
                 emailInput.style.borderColor = 'var(--border)';
                 passInput.style.borderColor = 'var(--border)';
             }, 500);
 
-            // Auto-submit
             this.handleLogin();
         }
     },
 
     _loginUser(user, isAutoRestore = false) {
         Object.assign(window.DUMMY.currentUser, user);
-        
+
         if (user.role === 'student' && user.branch && window.CSVData.branches[user.branch]) {
             const branchCourses = window.CSVData.branches[user.branch];
             if (!window.DUMMY._allSubjects) window.DUMMY._allSubjects = [...window.DUMMY.subjects];
@@ -155,7 +150,7 @@ window.App = {
         }
 
         localStorage.setItem('educonnect_session', JSON.stringify({ email: user.email }));
-        
+
         document.getElementById('splash-screen').style.display = 'none';
         document.getElementById('login-overlay').style.display = 'none';
         document.getElementById('app').style.display = 'block';
@@ -164,8 +159,7 @@ window.App = {
         TopNavComponent.render();
 
         if (!isAutoRestore) {
-            if (user.role === 'faculty') this.switchView('dashboard');
-            else this.switchView('dashboard');
+            this.switchView('dashboard');
         }
     },
 
@@ -216,13 +210,59 @@ window.App = {
         FacultyView.renderCourse(batchCode, subjectCode);
     },
 
+
+    /**
+     * applyThemeMode
+     * Handles Standard, Focus, and Night Owl modes.
+     * Standard: Default
+     * Focus: Manual or 2 weeks before exams
+     * Night Owl: Auto 11 PM - 6 AM
+     */
+    applyThemeMode() {
+        const now = new Date();
+        const hour = now.getHours();
+        const month = now.getMonth();
+        const day = now.getDate();
+
+        // Check for manual "Focus Mode" preference
+        const isFocusManual = localStorage.getItem('acadex_focus_mode') === 'true';
+
+        // Check for automatic Focus Mode (Placeholder: March 15 - April 1 as "Finals")
+        // Since current date is March 10, we are within "2 weeks before finals" if finals start March 24.
+        const isFocusAuto = (month === 2 && day >= 10 && day <= 24); // Focus mode starts March 10th
+
+        // Check for Night Owl (11 PM - 6 AM)
+        const isNightOwl = (hour >= 23 || hour < 6);
+
+        // Remove old classes
+        document.documentElement.classList.remove('theme-focus', 'theme-night', 'light-theme');
+
+        if (isNightOwl) {
+            document.documentElement.classList.add('theme-night');
+            console.log("🌙 Acadex Night Owl mode active.");
+        } else if (isFocusManual || isFocusAuto) {
+            document.documentElement.classList.add('theme-focus');
+            console.log("🔵 Focus mode Sanctuary active.");
+        } else {
+            // Standard mode (default, no extra class needed for vars, but good for clarity)
+            console.log("🔴 Standard mode Engine active.");
+        }
+    },
+
+    setFocusMode(enabled) {
+        localStorage.setItem('acadex_focus_mode', enabled ? 'true' : 'false');
+        this.applyThemeMode();
+    },
+
     toggleTheme(isInitialLoad = false) {
+        // Legacy support or fallback to light theme
         if (!isInitialLoad) {
             document.documentElement.classList.toggle('light-theme');
             const currentTheme = document.documentElement.classList.contains('light-theme') ? 'light' : 'dark';
             localStorage.setItem('acadex_theme', currentTheme);
         } else {
-            document.documentElement.classList.add('light-theme');
+            const saved = localStorage.getItem('acadex_theme');
+            if (saved === 'light') document.documentElement.classList.add('light-theme');
         }
 
         if (!document.getElementById('light-theme-styles')) {
@@ -237,9 +277,10 @@ window.App = {
                     --text-2: #424245;
                     --text-muted: #86868b;
                     --border: rgba(0, 0, 0, 0.1);
-                    --red-light: #d10000;
-                    --red-glow: rgba(209, 0, 0, 0.05);
-                    --red-border: rgba(209, 0, 0, 0.2);
+                    --accent: #d10000;
+                    --accent-light: #ff4d4d;
+                    --accent-glow: rgba(209, 0, 0, 0.05);
+                    --accent-border: rgba(209, 0, 0, 0.2);
                     --grad-logo: linear-gradient(135deg, #1d1d1f 0%, #d10000 120%);
                 }
                 .light-theme body, .light-theme #app-header, .light-theme #top-nav {
@@ -271,13 +312,14 @@ window.App = {
         }
     },
 
+
     getSubjectColor(identifier) {
         const palette = ['#EF4444', '#F97316', '#EAB308', '#22C55E', '#3B82F6', '#8B5CF6', '#EC4899', '#06B6D4'];
-        
+
         // Find subject index globally for consistency
         const subjects = window.DUMMY._allSubjects || window.DUMMY.subjects || [];
         const index = subjects.findIndex(s => s.id === identifier || s.code === identifier || s.name === identifier);
-        
+
         if (index !== -1) {
             return palette[index % palette.length];
         }

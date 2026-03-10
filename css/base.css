@@ -6,23 +6,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-  /* ── Backgrounds ── */
+  /* ── Default (Standard Mode): "The Engine" ── */
   --bg: #060608;
   --surface: #0f0f12;
   --surface-2: #161619;
   --surface-3: #1e1e23;
   --surface-4: #252529;
 
-  /* ── Red Accents (Original Premium Theme) ── */
-  --red: #EF4444;
-  --red-dark: #DC2626;
-  --red-darker: #B91C1C;
-  --red-light: #F87171;
-  --red-glow: rgba(239, 68, 68, 0.10);
-  --red-glow-md: rgba(239, 68, 68, 0.18);
-  --red-glow-lg: rgba(239, 68, 68, 0.25);
-  --red-border: rgba(239, 68, 68, 0.30);
-  --red-border-strong: rgba(239, 68, 68, 0.50);
+  /* ── Accent Primary (Red) ── */
+  --accent: #EF4444;
+  --accent-dark: #DC2626;
+  --accent-darker: #B91C1C;
+  --accent-light: #F87171;
+  --accent-glow: rgba(239, 68, 68, 0.10);
+  --accent-glow-md: rgba(239, 68, 68, 0.18);
+  --accent-glow-lg: rgba(239, 68, 68, 0.25);
+  --accent-border: rgba(239, 68, 68, 0.30);
+  --accent-border-strong: rgba(239, 68, 68, 0.50);
+
+  /* ── Glassmorphism ── */
+  --glass-blur: 10px;
+  --glass-bg: rgba(15, 15, 18, 0.7);
+
+  /* ── Legacy Red Variables (for compatibility) ── */
+  --red: var(--accent);
+  --red-dark: var(--accent-dark);
+  --red-darker: var(--accent-darker);
+  --red-light: var(--accent-light);
+  --red-glow: var(--accent-glow);
+  --red-glow-md: var(--accent-glow-md);
+  --red-glow-lg: var(--accent-glow-lg);
+  --red-border: var(--accent-border);
+  --red-border-strong: var(--accent-border-strong);
 
   /* ── Accent Colors for Modules ── */
   --accent-orange: #F97316;
@@ -38,6 +53,7 @@
   --text-3: #9CA3AF;
   --text-muted: #6B7280;
   --text-faint: #374151;
+  --text-brightness: 100%;
 
   /* ── Borders ── */
   --border: rgba(255, 255, 255, 0.06);
@@ -46,11 +62,12 @@
 
   /* ── Gradients ── */
   --grad-hero: linear-gradient(135deg, #130404 0%, #1a0606 40%, #120303 100%);
-  --grad-red: linear-gradient(135deg, #EF4444, #DC2626);
-  --grad-red-glow: linear-gradient(135deg, rgba(239, 68, 68, .15), rgba(220, 38, 38, .08));
+  --grad-accent: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  --grad-accent-glow: linear-gradient(135deg, var(--accent-glow-lg), transparent);
+  --grad-red: var(--grad-accent);
   --grad-surface: linear-gradient(160deg, #161619, #0f0f12);
   --grad-card: linear-gradient(145deg, #161619 0%, #111114 100%);
-  --grad-logo: linear-gradient(135deg, #FFFFFF 0%, #F87171 120%);
+  --grad-logo: linear-gradient(135deg, #FFFFFF 0%, var(--accent-light) 120%);
 
   /* ── Radius (Forced Sharp) ── */
   --r-xs: 0px;
@@ -66,8 +83,8 @@
   --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.6);
   --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.7);
   --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.8);
-  --shadow-red: 0 4px 24px rgba(239, 68, 68, 0.22);
-  --shadow-red-lg: 0 8px 40px rgba(239, 68, 68, 0.30);
+  --shadow-accent: 0 4px 24px var(--accent-glow-lg);
+  --shadow-red: var(--shadow-accent);
   --glow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 
   /* ── Spacing ── */
@@ -100,6 +117,54 @@
   --font-size-xl: 1.4rem;
   --font-size-2xl: 1.8rem;
 }
+
+/* 🔵 Focus Mode: "The Sanctuary" */
+.theme-focus {
+  --accent: #6366F1;
+  /* Indigo */
+  --accent-dark: #4F46E5;
+  --accent-darker: #4338CA;
+  --accent-light: #818CF8;
+  --accent-glow: rgba(99, 102, 241, 0.08);
+  --accent-glow-md: rgba(99, 102, 241, 0.15);
+  --accent-glow-lg: rgba(99, 102, 241, 0.22);
+  --accent-border: rgba(99, 102, 241, 0.25);
+  --accent-border-strong: rgba(99, 102, 241, 0.40);
+
+  --glass-blur: 25px;
+  /* "Hide" background distractions */
+  --glass-bg: rgba(15, 15, 20, 0.85);
+
+  --grad-hero: linear-gradient(135deg, #050510 0%, #0a0a1a 100%);
+  --grad-logo: linear-gradient(135deg, #FFFFFF 0%, #818CF8 120%);
+}
+
+/* 🟠 Night Owl Mode: "The Midnight Oil" */
+.theme-night {
+  --bg: #000000;
+  /* True Black */
+  --accent: #F59E0B;
+  /* Amber/Burnt Orange */
+  --accent-dark: #D97706;
+  --accent-darker: #B45309;
+  --accent-light: #FBBF24;
+  --accent-glow: rgba(245, 158, 11, 0.08);
+  --accent-glow-md: rgba(245, 158, 11, 0.15);
+  --accent-glow-lg: rgba(245, 158, 11, 0.22);
+  --accent-border: rgba(245, 158, 11, 0.25);
+  --accent-border-strong: rgba(245, 158, 11, 0.40);
+
+  --text-brightness: 80%;
+  /* Lower contrast for eye strain */
+
+  --grad-hero: linear-gradient(135deg, #000000 0%, #0a0500 100%);
+  --grad-logo: linear-gradient(135deg, #FFFFFF 0%, #FBBF24 120%);
+}
+
+.theme-night body {
+  filter: brightness(var(--text-brightness));
+}
+
 
 /* ── RESET ────────────────────────────────────────────────── */
 *,
@@ -151,7 +216,10 @@ body {
 :not(input):not(textarea):not(select) {
   caret-color: transparent;
 }
-input, textarea, select {
+
+input,
+textarea,
+select {
   caret-color: auto;
 }
 

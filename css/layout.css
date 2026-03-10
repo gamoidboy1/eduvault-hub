@@ -11,8 +11,8 @@
     right: 0;
     height: var(--header-h);
     background: rgba(6, 6, 8, 0.96);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
     border-bottom: 1px solid var(--border);
     z-index: 900;
     display: flex;
@@ -84,8 +84,8 @@
     bottom: 0;
     width: 240px;
     background: var(--bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
     border-right: 1px solid var(--border);
     border-bottom: none;
     z-index: 1100;
@@ -140,12 +140,10 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.05),
-        transparent
-    );
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.05),
+            transparent);
     transition: left 0.5s ease;
     z-index: 1;
 }
@@ -193,8 +191,15 @@
 }
 
 @keyframes fadeInScale {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @media (max-width: 850px) {
@@ -254,8 +259,8 @@
         right: 20px;
         width: 54px;
         height: 54px;
-        background: var(--red);
-        background: linear-gradient(135deg, var(--red-light), #ff4444);
+        background: var(--accent);
+        background: var(--grad-accent);
         color: white;
         border-radius: 50%;
         align-items: center;
@@ -351,9 +356,9 @@
 }
 
 .login-card {
-    background: rgba(25, 25, 25, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 0px;
     padding: 34px 30px;
