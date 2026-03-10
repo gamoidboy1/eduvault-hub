@@ -44,28 +44,24 @@ window.ProfileView = {
 
       <div style="margin-bottom: 20px;"></div>
 
-      <!-- System Preferences -->
-      <div class="section-label" style="padding-left:0; padding-right:0;">System Preferences</div>
+      <!-- Theme Preferences (Manual) -->
+      <div class="section-label" style="padding-left:0; padding-right:0;">Appearance Mode</div>
       <div class="t-box" style="margin-top:0;">
-        <div style="padding:0 16px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0; border-bottom:1px solid rgba(255,255,255,.04);">
-            <div style="display:flex; flex-direction:column; gap:2px;">
-              <span style="font-size:.77rem;color:var(--text-3);font-weight:600;">Manual Focus Mode</span>
-              <span style="font-size:.62rem;color:var(--text-muted);font-weight:500;">Overrides automatic scheduling</span>
-            </div>
-            <button onclick="window.App.setFocusMode(localStorage.getItem('acadex_focus_mode') !== 'true'); ProfileView.render();" 
-                    class="btn-tiny ${localStorage.getItem('acadex_focus_mode') === 'true' ? 'btn-active' : ''}">
-              ${localStorage.getItem('acadex_focus_mode') === 'true' ? 'Disable Sanctuary' : 'Enter Sanctuary'}
-            </button>
+        <div style="padding:16px;">
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px;">
+            <button onclick="window.App.setThemeMode('Standard'); ProfileView.render();" 
+                    style="${(localStorage.getItem('acadex_theme_mode') || 'Standard') === 'Standard' ? 'border-color:var(--accent); background:var(--accent-glow); color:var(--accent-light);' : ''}"
+                    class="btn-tiny"> Standard </button>
+            <button onclick="window.App.setThemeMode('Focus'); ProfileView.render();" 
+                    style="${localStorage.getItem('acadex_theme_mode') === 'Focus' ? 'border-color:var(--accent); background:var(--accent-glow); color:var(--accent-light);' : ''}"
+                    class="btn-tiny"> Focus </button>
+            <button onclick="window.App.setThemeMode('Night'); ProfileView.render();" 
+                    style="${localStorage.getItem('acadex_theme_mode') === 'Night' ? 'border-color:var(--accent); background:var(--accent-glow); color:var(--accent-light);' : ''}"
+                    class="btn-tiny"> Night </button>
           </div>
           
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0; border-bottom:1px solid rgba(255,255,255,.04);">
-             <span style="font-size:.77rem;color:var(--text-3);font-weight:600;">Auto-Switching</span>
-             <span style="font-size:.70rem;color:var(--accent-light);font-weight:700;text-transform:uppercase;letter-spacing:1px;">ACTIVE</span>
-          </div>
-          
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;">
-             <span style="font-size:.77rem;color:var(--text-3);font-weight:600;">Legacy Light Theme</span>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0 0; margin-top:14px; border-top:1px solid rgba(255,255,255,.04);">
+             <span style="font-size:.75rem;color:var(--text-3);font-weight:600;">Legacy Light Theme</span>
              <button onclick="window.App.toggleTheme(); ProfileView.render();" class="btn-tiny">Toggle</button>
           </div>
         </div>

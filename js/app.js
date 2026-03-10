@@ -213,44 +213,29 @@ window.App = {
 
     /**
      * applyThemeMode
-     * Handles Standard, Focus, and Night Owl modes.
-     * Standard: Default
-     * Focus: Manual or 2 weeks before exams
-     * Night Owl: Auto 11 PM - 6 AM
+     * Handles Standard, Focus, and Night Owl modes manually.
      */
     applyThemeMode() {
-        const now = new Date();
-        const hour = now.getHours();
-        const month = now.getMonth();
-        const day = now.getDate();
+        // Retrieve manual theme mode (Standard, Focus, Night)
+        let mode = localStorage.getItem('acadex_theme_mode') || 'Standard';
 
-        // Check for manual "Focus Mode" preference
-        const isFocusManual = localStorage.getItem('acadex_focus_mode') === 'true';
-
-        // Check for automatic Focus Mode (Placeholder: March 15 - April 1 as "Finals")
-        // Since current date is March 10, we are within "2 weeks before finals" if finals start March 24.
-        const isFocusAuto = (month === 2 && day >= 10 && day <= 24); // Focus mode starts March 10th
-
-        // Check for Night Owl (11 PM - 6 AM)
-        const isNightOwl = (hour >= 23 || hour < 6);
-
-        // Remove old classes
+        // Remove all theme classes
         document.documentElement.classList.remove('theme-focus', 'theme-night', 'light-theme');
 
-        if (isNightOwl) {
+        if (mode === 'Night') {
             document.documentElement.classList.add('theme-night');
-            console.log("🌙 Acadex Night Owl mode active.");
-        } else if (isFocusManual || isFocusAuto) {
+            console.log("🌙 Acadex Night Owl mode: Active (Manual)");
+        } else if (mode === 'Focus') {
             document.documentElement.classList.add('theme-focus');
-            console.log("🔵 Focus mode Sanctuary active.");
+            console.log("🔵 Focus mode Sanctuary: Active (Manual)");
         } else {
-            // Standard mode (default, no extra class needed for vars, but good for clarity)
-            console.log("🔴 Standard mode Engine active.");
+            console.log("🔴 Standard mode Engine: Active (Manual)");
         }
     },
 
-    setFocusMode(enabled) {
-        localStorage.setItem('acadex_focus_mode', enabled ? 'true' : 'false');
+    setThemeMode(mode) {
+        // mode should be 'Standard', 'Focus', or 'Night'
+        localStorage.setItem('acadex_theme_mode', mode);
         this.applyThemeMode();
     },
 
